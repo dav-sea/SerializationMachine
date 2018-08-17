@@ -1,0 +1,4 @@
+C:\Users\FmThePro\AppData\Local\Temporary Projects\SerializeMachine\bin\Release\SerializeMachine.dll
+C:\Users\FmThePro\AppData\Local\Temporary Projects\SerializeMachine\bin\Release\SerializeMachine.pdb
+C:\Users\FmThePro\AppData\Local\Temporary Projects\SerializeMachine\obj\Release\SerializeMachine.dll
+C:\Users\FmThePro\AppData\Local\Temporary Projects\SerializeMachine\obj\Release\SerializeMachine.pdb
