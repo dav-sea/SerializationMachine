@@ -48,11 +48,14 @@
     <Compile Include="IReadOnlyResolverStorage.cs" />
     <Compile Include="IResolverStorage.cs" />
     <Compile Include="ResolverStorage.cs" />
+    <Compile Include="Resolvers\Primitives\IntegerResolver.cs" />
+    <Compile Include="Resolvers\RuntimeResolver.cs" />
     <Compile Include="SerializedHeap.cs" />
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeDictionary.cs" />
-    <Compile Include="Utility\SerializeTargetUtility.cs" />
+    <Compile Include="Utility\AtributtesUtility.cs" />
+    <Compile Include="Utility\SerializationUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -37,17 +37,38 @@ namespace SerializeMachine
 
     public sealed class SerializeMachine
     {
-        private readonly Heap Heap;
-        private readonly TypeDictionary TypeDictionary;
-        private readonly ResolverStorage ResolverStorage;
-        private readonly SerializedHeap SerializedHeap;
+        Serializator Serializator;
 
         public SerializeMachine()
         {
-            TypeDictionary = new TypeDictionary(20);
-            ResolverStorage = new ResolverStorage(TypeDictionary);
-            Heap = new Heap(20);
+            Serializator = new Serializator();
+            var typeDictionary = Serializator.TypeDictionary;
+            var storage = Serializator.ResolverStorage;
+            typeDictionary.AddConvention(typeof(int), "INT");
+            storage.AddResolver(new Resolvers.Primitives.IntegerResolver(), "INT");
+            
         }
+
+        public XElement Serialize(object root)
+        {
+            var package = new XElement("SMPackage");
+
+            package.Add(new XAttribute("Root",Serializator.Heap.GetOriginalHeap().GuidOf(root).ToString()));
+            package.Add(TypeDictionary.CreateSerializedTypeDictionary(Serializator.TypeDictionary.ToDictionary()));
+            package.Add(SerializedHeap.CreateSerializedHeap(Serializator.Heap.ToDictionary()));
+
+            return package;
+        }
+        internal XElement SerializeRoot(object root)
+        {
+            Serializator.FlashHeap();
+            return Serializator.GetSerialized(root);
+        }
+        //public object Deserialize(XElement serializedRoot)
+        //{
+          //  Serializator.FlashHeap();
+
+        //}
     }
 
 

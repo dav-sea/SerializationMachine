@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 
 namespace SerializeMachine.Utility
 {
-    public static class SerializeTargetUtility
+    public static class AtributtesUtility
     {
         internal static bool IsSerializableInternal(Type type)
         {

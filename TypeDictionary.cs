@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace SerializeMachine
@@ -52,6 +50,39 @@ namespace SerializeMachine
         {
             return new XElement(convention);
         }
+    
+        public IDictionary<string,Type> ToDictionary()
+        {
+            return TypeList;
+        }
+        public static XElement CreateSerializedTypeDictionary(TypeDictionary typeDictionary)
+        {
+            if (typeDictionary == null) throw new ArgumentNullException("typeDictionary");
+            var target = typeDictionary.ToDictionary();
+            if(target == null) throw new InvalidOperationException("typeDictionary method ToDictionary() return null");
+            return CreateSerializedTypeDictionary(target);
+        }
+        internal static XElement CreateSerializedTypeDictionary(IDictionary<string, Type> typeDictionary)
+        {
+            var serialized = new XElement("TDictionary");
+
+            foreach(var pair in typeDictionary)
+                serialized.Add(
+                    new XElement(
+                        pair.Key,pair.Value.AssemblyQualifiedName.ToString()
+                        )
+                );
+
+            return serialized;
+        }
+
+        //TODO MB
+        /*
+         * internal static class TypeOf<T> 
+         * {
+         *     public static readonly Type Runtime = typeof(T);
+         * }
+         */
     }
 
 
