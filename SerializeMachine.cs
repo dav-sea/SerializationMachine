@@ -51,6 +51,7 @@ namespace SerializeMachine
 
         public XElement Serialize(object root)
         {
+            Serializator.FlashHeap();
             var package = new XElement("SMPackage");
 
             package.Add(new XAttribute("Root",Serializator.Heap.GetOriginalHeap().GuidOf(root).ToString()));
@@ -58,11 +59,6 @@ namespace SerializeMachine
             package.Add(SerializedHeap.CreateSerializedHeap(Serializator.Heap.ToDictionary()));
 
             return package;
-        }
-        internal XElement SerializeRoot(object root)
-        {
-            Serializator.FlashHeap();
-            return Serializator.GetSerialized(root);
         }
         //public object Deserialize(XElement serializedRoot)
         //{

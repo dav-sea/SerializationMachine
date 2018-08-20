@@ -1,5 +1,5 @@
 bin/Debug
 SerializeMachine.pdb
-obj/Debug
 SerializeMachine.csproj
 SerializeMachine.csproj.user
+obj

@@ -21,6 +21,17 @@ namespace SerializeMachine
             var index = HeapList.IndexOfValue(obj);
             return index < 0 ? Guid.Empty : HeapList.Keys[index];
         }
+        public bool TryGetGuid(object obj, out Guid guid)
+        {
+            var index = HeapList.IndexOfValue(obj);
+            if (index < 0)
+            {
+                guid = TypeDictionary.GUID_NULL;
+                return false;
+            }
+            guid = HeapList.Keys[index];
+            return true;
+        }
         public bool Contains(object obj)
         {
             return HeapList.ContainsValue(obj);

@@ -22,6 +22,11 @@ namespace SerializeMachine
             else HeapList.Values[index] = serialized;
         }
 
+        public bool TryGetSerialized(Guid guid, out XElement serialized)
+        {
+            return HeapList.TryGetValue(guid,out serialized);
+        }
+
         public XElement GetSerialized(Guid guid)
         {
             XElement result;
