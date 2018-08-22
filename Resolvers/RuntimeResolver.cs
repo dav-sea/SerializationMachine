@@ -27,10 +27,7 @@ namespace SerializeMachine.Resolvers
 
         public object Deserialzie(XElement serialized)
         {
-            foreach (var field in serialized.Elements())
-            {
-
-            }
+            return null;
         }
 
         public RuntimeResolver(Type resolveType,Serializator serializator)
@@ -41,6 +38,7 @@ namespace SerializeMachine.Resolvers
                 this.Serializator = serializator;
                 Fields = SerializationUtility.Targeting.GetSerializableFieldsInternal(resolveType).ToArray();
             }
+            else Fields = new FieldInfo[0];
         }
 
        /* private struct FieldResolver : IResolver

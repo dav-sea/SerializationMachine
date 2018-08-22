@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SerializeMachine.Core;
 using System.Xml.Linq;
-
+using SerializeMachine.Utility;
 
 namespace SerializeMachine
 {
@@ -42,9 +42,9 @@ namespace SerializeMachine
         public SerializeMachine()
         {
             Serializator = new Serializator();
-            var typeDictionary = Serializator.TypeDictionary;
-            var storage = Serializator.ResolverStorage;
-            typeDictionary.AddConvention(typeof(int), "INT");
+
+            var storage = Serializator.ResolverBank.Storage;
+            Serializator.TypeManager.Dictionary.AddConvention(typeof(int), "INT");
             storage.AddResolver(new Resolvers.Primitives.IntegerResolver(), "INT");
             
         }
@@ -52,14 +52,24 @@ namespace SerializeMachine
         public XElement Serialize(object root)
         {
             Serializator.FlashHeap();
+
+            var rootGuid = Guid.NewGuid();
+            Serializator.HeapManager.Original.AddObject(root, rootGuid);
+            var serialized = Serializator.Resolve(root);
+            Serializator.HeapManager.Serialized.Push(rootGuid, serialized);
+            
             var package = new XElement("SMPackage");
 
-            package.Add(new XAttribute("Root",Serializator.Heap.GetOriginalHeap().GuidOf(root).ToString()));
-            package.Add(TypeDictionary.CreateSerializedTypeDictionary(Serializator.TypeDictionary.ToDictionary()));
-            package.Add(SerializedHeap.CreateSerializedHeap(Serializator.Heap.ToDictionary()));
+            package.Add(new XAttribute("Root",Serializator.HeapManager.Original.GuidOf(root).ToString()));
+            PackageUtility.PackToInternal(package, Serializator.TypeManager.Dictionary, Serializator.HeapManager.Serialized);
 
             return package;
         }
+        public object Deserialize(XElement package)
+        {
+            return null;
+        }
+        
         //public object Deserialize(XElement serializedRoot)
         //{
           //  Serializator.FlashHeap();

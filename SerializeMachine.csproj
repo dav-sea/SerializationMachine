@@ -40,13 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConventionConvertor.cs" />
     <Compile Include="Core\IResolver.cs" />
     <Compile Include="Core\Serializator.cs" />
     <Compile Include="GUIDFactory.cs" />
     <Compile Include="Heap.cs" />
+    <Compile Include="HeapManager.cs" />
     <Compile Include="IGUIDFactory.cs" />
     <Compile Include="IReadOnlyResolverStorage.cs" />
     <Compile Include="IResolverStorage.cs" />
+    <Compile Include="ResolverBank.cs" />
+    <Compile Include="ResolverFacrory.cs" />
     <Compile Include="ResolverStorage.cs" />
     <Compile Include="Resolvers\Primitives\IntegerResolver.cs" />
     <Compile Include="Resolvers\RuntimeResolver.cs" />
@@ -54,8 +58,11 @@
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeDictionary.cs" />
+    <Compile Include="TypeManager.cs" />
     <Compile Include="Utility\AtributtesUtility.cs" />
+    <Compile Include="Utility\PackageUtility.cs" />
     <Compile Include="Utility\SerializationUtility.cs" />
+    <Compile Include="Utility\XMLUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SerializeMachine.Core;
 
 namespace SerializeMachine
 {
+    
     public sealed class Heap
     {
         private readonly SortedList<Guid, object> HeapList;//TODO OPTIMIZE FOR TYPE
@@ -16,6 +16,12 @@ namespace SerializeMachine
             HeapList = new SortedList<Guid, object>(heapCapacity);
         }
 
+        public object ObjectOf(Guid guid)
+        {
+            object obj;
+            HeapList.TryGetValue(guid, out obj);
+            return obj;
+        }
         public Guid GuidOf(object obj)
         {
             var index = HeapList.IndexOfValue(obj);
@@ -26,7 +32,7 @@ namespace SerializeMachine
             var index = HeapList.IndexOfValue(obj);
             if (index < 0)
             {
-                guid = TypeDictionary.GUID_NULL;
+                guid = Serializator.GUID_NULL;
                 return false;
             }
             guid = HeapList.Keys[index];
