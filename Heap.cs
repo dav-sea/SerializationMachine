@@ -54,5 +54,9 @@ namespace SerializeMachine
         {
             HeapList.Remove(guid);
         }
+        public void ClearHeap()
+        {
+            HeapList.Clear();
+        }
     }
 }

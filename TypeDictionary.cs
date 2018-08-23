@@ -81,6 +81,11 @@ namespace SerializeMachine
             LoadTypesInternal(serialized, TypeList);
         }
 
+        public void Clear()
+        {
+            TypeList.Clear();
+        }
+
         public static XElement GetHead(string convention)
         {
             return new XElement(convention);

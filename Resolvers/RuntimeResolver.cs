@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Linq;
 
+using System.Runtime.Serialization;
+
 using SerializeMachine.Core;
 using SerializeMachine.Utility;
 
@@ -11,23 +13,39 @@ namespace SerializeMachine.Resolvers
     /// <summary>
     /// Resolver 
     /// </summary>
-    public sealed class RuntimeResolver : Core.IResolver
+    public sealed class RuntimeResolver : IResolver
     {
         private readonly Type ResolveType;
         private readonly Serializator Serializator;
-        private readonly FieldInfo[] Fields;
+        private readonly IList<FieldInfo> Fields;
 
         public void Serialize(XElement serialized, object obj)
         {
-            for (int i = 0; i < Fields.Length; i++)
+            var leng = Fields.Count;
+            for (int i = 0; i < leng; i++)
             {
-                serialized.Add(Serializator.GetFieldSerialized(Fields[i].GetValue(obj)));
+                serialized.Add(Serializator.ContextResolve(Fields[i].GetValue(obj)));
             }
         }
 
         public object Deserialzie(XElement serialized)
         {
-            return null;
+            var reflectionEnumerator = Fields.GetEnumerator();
+            var serializedEnumerator = serialized.Elements().GetEnumerator();
+
+            object instance = CreateNewInstance();
+
+            while (reflectionEnumerator.MoveNext() && serializedEnumerator.MoveNext())
+            {
+                reflectionEnumerator.Current.SetValue(instance, Serializator.ContextDeresolve(serializedEnumerator.Current));
+            }
+
+            return instance;
+        }
+
+        private object CreateNewInstance()
+        {
+            return FormatterServices.GetUninitializedObject(ResolveType);
         }
 
         public RuntimeResolver(Type resolveType,Serializator serializator)

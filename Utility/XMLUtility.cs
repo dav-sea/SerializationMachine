@@ -24,8 +24,20 @@ namespace SerializeMachine.Utility
         internal static string GuidOfInternal(XElement node)
         {
             var attribute = node.Attribute(Serializator.XML_ATTRIBUTENAME_GUID);
-            return attribute == null ? string.Empty : attribute.Value;
+            return attribute == null ? Serializator.GUID_NULL_TOSTRING : attribute.Value;
                 
+        }
+        internal static bool IsNullOf(XElement node)
+        {
+            return node.Name.LocalName == Serializator.XML_ELEMENTNAME_NULL;
+        }
+        internal static XElement CreateReferenceNode(string convention, string guid)
+        {
+            return new XElement(convention, guid);
+        }
+        internal static XElement CreateNullNode()
+        {
+            return new XElement(Serializator.XML_ELEMENTNAME_NULL);
         }
     }
 }

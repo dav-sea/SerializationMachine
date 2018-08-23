@@ -41,5 +41,10 @@ namespace SerializeMachine
             OriginalHeap = new Heap(50);
             SerializedHeap = new SerializedHeap(OriginalHeap);
         }
+        public void FlashHeaps()
+        {
+            SerializedHeap.ClearSerialized();
+            OriginalHeap.ClearHeap();
+        }
     }
 }

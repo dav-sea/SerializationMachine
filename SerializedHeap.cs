@@ -8,7 +8,7 @@ namespace SerializeMachine
     public sealed class SerializedHeap
     {
         public const string XML_ELEMENTNAME_SERIALIZEDHEAP = "HEAP";
-        private const string XML_ELEMENTNAME_ELEMENT = "E";
+        //private const string XML_ELEMENTNAME_ELEMENT = "E";
 
         private readonly Heap OriginalHeap;
 
@@ -82,14 +82,12 @@ namespace SerializeMachine
         internal static XElement CreateSerializedHeap(IDictionary<Guid, XElement> heap)
         {
             var serialized = new XElement(XML_ELEMENTNAME_SERIALIZEDHEAP);
-            const string elementName = XML_ELEMENTNAME_ELEMENT;
             XElement element;
 
             foreach (var pair in heap)
             {
-                element = new XElement(elementName, pair.Value);
-                XMLUtility.AttachGUIDInternal(element, pair.Key.ToString());
-                serialized.Add(element);
+                XMLUtility.AttachGUIDInternal(pair.Value, pair.Key.ToString());
+                serialized.Add(pair.Value);
             }
 
             return serialized;

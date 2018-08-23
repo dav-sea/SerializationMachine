@@ -51,7 +51,7 @@ namespace SerializeMachine
 
         public XElement Serialize(object root)
         {
-            Serializator.FlashHeap();
+            Serializator.FlashHeaps();
 
             var rootGuid = Guid.NewGuid();
             Serializator.HeapManager.Original.AddObject(root, rootGuid);
@@ -67,7 +67,15 @@ namespace SerializeMachine
         }
         public object Deserialize(XElement package)
         {
-            return null;
+            Serializator.FlashHeaps();
+
+            Serializator.TypeManager.Dictionary.Clear();
+            Serializator.TypeManager.Dictionary.OverloadTypes(PackageUtility.GetTypeDictionary(package));
+            Serializator.HeapManager.Serialized.LoadHeapSerialized(PackageUtility.GetSerializedHeap(package),true);
+
+            var rootGuid = new Guid(package.Attribute("Root").Value);
+
+            return Serializator.Deresolve(Serializator.HeapManager.Serialized.GetSerialized(rootGuid));
         }
         
         //public object Deserialize(XElement serializedRoot)
