@@ -45,7 +45,7 @@ namespace SerializeMachine
 
             var storage = Serializator.ResolverBank.Storage;
             Serializator.TypeManager.Dictionary.AddConvention(typeof(int), "INT");
-            storage.AddResolver(new Resolvers.Primitives.IntegerResolver(), "INT");
+            storage.AddResolver(new Resolvers.Primitives.Int32Resolver(), "INT");
             
         }
 

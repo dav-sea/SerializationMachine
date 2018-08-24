@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    internal sealed class IntegerResolver : Core.IResolver
+    public sealed class UInt16Resolver : Core.IResolver
     {
         public void Serialize(XElement serialized, object obj)
         {
@@ -10,7 +10,7 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public object Deserialzie(XElement serialized)
         {
-            return int.Parse(serialized.Value);
+            return System.UInt16.Parse(serialized.Value);
         }
     }
 }
