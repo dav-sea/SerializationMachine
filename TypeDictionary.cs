@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
+using SerializeMachine.Core;
+
 namespace SerializeMachine
 {
     public sealed class TypeDictionary
@@ -52,6 +54,11 @@ namespace SerializeMachine
             return TypeList.TryGetValue(convention, out type);
         }
 
+        public void OverloadConvention(Type type, string convention)
+        {
+            DeleteAllConventionOf(type);
+            AddConvention(type, convention);
+        }
         public void AddConvention(Type type, string convention)
         {
             TypeList.Add(convention, type);
@@ -60,7 +67,16 @@ namespace SerializeMachine
         {
             TypeList.Remove(convention);
         }
-        
+        public void DeleteAllConventionOf(Type type)
+        {
+            int index = TypeList.IndexOfValue(type);
+            while (index >= 0)
+            {
+                TypeList.RemoveAt(index);
+                index = TypeList.IndexOfValue(type);
+            }
+        }
+
         public TypeDictionary(int dictionaryCapacity)
         {
             TypeList = new SortedList<string, Type>(dictionaryCapacity);
@@ -134,7 +150,6 @@ namespace SerializeMachine
         {
             return serialized == null ? new TypeDictionary(0) : new TypeDictionary(serialized);
         }
-
     }
 
 

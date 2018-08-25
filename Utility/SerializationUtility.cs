@@ -15,7 +15,10 @@ namespace SerializeMachine.Utility
            return !type.IsClass;
        }
 
-
+       internal static object InstantiateUninitializedObject(Type typeObject)
+       {
+           return System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeObject);
+       }
 
        public static class Reflection
        {
@@ -26,6 +29,10 @@ namespace SerializeMachine.Utility
            internal static FieldInfo[] GetFieldInfoInternal(Type type,BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
            {
                return type.GetFields(flags);
+           }
+           internal static ConstructorInfo GetDefaultConstructor(Type type)
+           {
+               return type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public, null, new Type[0], null);
            }
        }
        public static class Targeting

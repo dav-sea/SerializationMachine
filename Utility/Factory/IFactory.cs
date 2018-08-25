@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SerializeMachine
+namespace SerializeMachine.Utility
 {
-    interface IGUIDFactory
+    public interface IFactory
     {
-        Guid TakeGUID();
+        object Instantiate();
     }
 }

@@ -3,24 +3,51 @@ using System.Collections.Generic;
 using SerializeMachine.Core;
 using System.Reflection;
 using SerializeMachine.Resolvers;
+using SerializeMachine.Utility;
+using SerializeMachine.Resolvers.Primitives;
 
 namespace SerializeMachine
 {
     public sealed class ResolverFacrory
     {
-        private readonly SortedList<string, ConstructorInfo> Constructors;
-
         private readonly Serializator Serializator;
 
         public IResolver CreateResolver(string convention)
         {
-            return new RuntimeResolver(Serializator.TypeManager.TypeOf(convention), Serializator);
+            var type = Serializator.TypeManager.TypeOf(convention);
+
+            //Нужно отловить все втроенные типы
+            if (type.IsValueType)//Проверяем является ли тип значимым
+            {
+                if (type.IsPrimitive)//Проверяем является ли тип примитивным
+                {
+                    if (TypeOf<Boolean>.Equals(type)) return new BooleanResolver();
+                    if (TypeOf<Byte>.Equals(type)) return new ByteResolver();
+                    if (TypeOf<Char>.Equals(type)) return new CharResolver();
+                    if (TypeOf<Double>.Equals(type)) return new DoubleResolver();
+                    if (TypeOf<Int16>.Equals(type)) return new Int16Resolver();
+                    if (TypeOf<Int32>.Equals(type)) return new Int32Resolver();
+                    if (TypeOf<Int64>.Equals(type)) return new Int64Resolver();
+                    if (TypeOf<SByte>.Equals(type)) return new SByteResolver();
+                    if (TypeOf<Single>.Equals(type)) return new SingleResolver();
+                    if (TypeOf<UInt16>.Equals(type)) return new UInt16Resolver();
+                    if (TypeOf<UInt32>.Equals(type)) return new UInt32Resolver();
+                    if (TypeOf<UInt16>.Equals(type)) return new UInt16Resolver();
+                }
+                if (TypeOf<Decimal>.Equals(type)) return new DecimalResolver();
+            }
+            else
+            {
+                if (TypeOf<Object>.Equals(type))return new ObjectResolver();
+                if (TypeOf<String>.Equals(type))return new StringResolver();
+            }
+
+            return new RuntimeResolver(type, Serializator);
         }
 
         public ResolverFacrory(Serializator serializator)
         {
             this.Serializator = serializator;
-            Constructors = new SortedList<string, ConstructorInfo>(10);
         }
     }
 }

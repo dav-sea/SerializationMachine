@@ -43,10 +43,8 @@
     <Compile Include="ConventionConvertor.cs" />
     <Compile Include="Core\IResolver.cs" />
     <Compile Include="Core\Serializator.cs" />
-    <Compile Include="GUIDFactory.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="HeapManager.cs" />
-    <Compile Include="IGUIDFactory.cs" />
     <Compile Include="IReadOnlyResolverStorage.cs" />
     <Compile Include="IResolverStorage.cs" />
     <Compile Include="ResolverBank.cs" />
@@ -75,8 +73,15 @@
     <Compile Include="TypeDictionary.cs" />
     <Compile Include="TypeManager.cs" />
     <Compile Include="Utility\AtributtesUtility.cs" />
+    <Compile Include="Utility\Factory\Factory.cs" />
+    <Compile Include="Utility\Factory\FactoryByCustomFunc.cs" />
+    <Compile Include="Utility\Factory\NullFactory.cs" />
+    <Compile Include="Utility\Factory\FactoryByConstructor.cs" />
+    <Compile Include="Utility\Factory\IFactory.cs" />
+    <Compile Include="Utility\Factory\UninitializedObjectFactory.cs" />
     <Compile Include="Utility\PackageUtility.cs" />
     <Compile Include="Utility\SerializationUtility.cs" />
+    <Compile Include="Utility\TypeOf.cs" />
     <Compile Include="Utility\XMLUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

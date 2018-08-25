@@ -13,13 +13,12 @@ namespace SerializeMachine.Resolvers
     /// <summary>
     /// Resolver 
     /// </summary>
-    public sealed class RuntimeResolver : IResolver
+    public sealed class RuntimeResolver : Resolver
     {
-        private readonly Type ResolveType;
-        private readonly Serializator Serializator;
         private readonly IList<FieldInfo> Fields;
+        private readonly IFactory ObjectFactory;
 
-        public void Serialize(XElement serialized, object obj)
+        public override sealed void Serialize(XElement serialized, object obj)
         {
             var leng = Fields.Count;
             for (int i = 0; i < leng; i++)
@@ -27,94 +26,39 @@ namespace SerializeMachine.Resolvers
                 serialized.Add(Serializator.ContextResolve(Fields[i].GetValue(obj)));
             }
         }
-
-        public object Deserialzie(XElement serialized)
+        public override sealed object Deserialzie(XElement serialized)
         {
             var reflectionEnumerator = Fields.GetEnumerator();
             var serializedEnumerator = serialized.Elements().GetEnumerator();
 
-            object instance = CreateNewInstance();
+            object instance = ObjectFactory.Instantiate();
 
-            while (reflectionEnumerator.MoveNext() && serializedEnumerator.MoveNext())
-            {
-                reflectionEnumerator.Current.SetValue(instance, Serializator.ContextDeresolve(serializedEnumerator.Current));
-            }
+            if(instance != null)
+                while (reflectionEnumerator.MoveNext() && serializedEnumerator.MoveNext())
+                    reflectionEnumerator.Current.SetValue(instance, Serializator.ContextDeresolve(serializedEnumerator.Current));
 
             return instance;
         }
 
-        private object CreateNewInstance()
-        {
-            return FormatterServices.GetUninitializedObject(ResolveType);
-        }
+        public RuntimeResolver(Type resolveType, Serializator serializator)
+            : this(serializator, resolveType, true) { }
 
-        public RuntimeResolver(Type resolveType,Serializator serializator)
+        public RuntimeResolver(Serializator serializator, Type resolveType,bool useConstructor)
+            :base(serializator,resolveType)
         {
             if (resolveType != null)
             {
-                this.ResolveType = resolveType;
-                this.Serializator = serializator;
-                Fields = SerializationUtility.Targeting.GetSerializableFieldsInternal(resolveType).ToArray();
-            }
-            else Fields = new FieldInfo[0];
-        }
-
-       /* private struct FieldResolver : IResolver
-        {
-            private RuntimeResolver RuntimeResolver;
-            private Action<XElement, object, RuntimeResolver> SerializeMethod;
-            private Func<object, XElement> DeserializeMethod;
-
-            public void Serialize(XElement serialized, object obj)
-            {
-                SerializeMethod(serialized, obj, RuntimeResolver);
-            }
-            public object Deserialzie(XElement serialized)
-            {
-                return DeserializeMethod(serialized);
-            }
-
-            public static FieldResolver BuildResolver(bool referenceSave, bool safelySerialization, bool safelyDeserialization)
-            {
-
-            }
-            private static Action<XElement, object, RuntimeResolver> BuildSerializeMethod(bool referenceSave, bool safely)
-            {
-                if (referenceSave)
-                {
-                    if (safely)
-                    {
-                        return delegate(XElement serialized,object obj,RuntimeResolver resolver)
-                        {
-                            Guid guid;
-                            if (serialized == null) return;
-                            if (obj == null || obj.GetType() != resolver.ResolveType)
-                            {
-                                serialized.Value = "";
-                                serialized.Add(new XAttribute("GUID",TypeDictionary.CONVENTION_NULL));
-                            }
-                            resolver.Serializator.GetSerialized(obj,out guid);
-                            serialized.Value = guid.ToString();
-                        };
-                    }
-                    else
-                    {
-
-                    }
-                }
+                Fields = SerializationUtility.Targeting.GetSerializableFieldsInternal(resolveType);
+                if (useConstructor)
+                    ObjectFactory = Factory.CreateConstructorFactory(resolveType);
                 else
-                {
-                    if (safely)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                }
+                    ObjectFactory = Factory.CreateUninitializedFactory(resolveType);
+            }
+            else
+            {
+                Fields = new FieldInfo[0];
+                ObjectFactory = Factory.CreateCustomFactory(null);
             }
         }
-        */
     }
 }
