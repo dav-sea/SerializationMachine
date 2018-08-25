@@ -44,8 +44,6 @@ namespace SerializeMachine
             Serializator = new Serializator();
 
             var storage = Serializator.ResolverBank.Storage;
-            Serializator.TypeManager.Dictionary.AddConvention(typeof(int), "INT");
-            storage.AddResolver(new Resolvers.Primitives.Int32Resolver(), "INT");
             
         }
 
@@ -53,10 +51,7 @@ namespace SerializeMachine
         {
             Serializator.FlashHeaps();
 
-            var rootGuid = Guid.NewGuid();
-            Serializator.HeapManager.Original.AddObject(root, rootGuid);
-            var serialized = Serializator.Resolve(root);
-            Serializator.HeapManager.Serialized.Push(rootGuid, serialized);
+            Serializator.ContextResolve(root);
             
             var package = new XElement("SMPackage");
 

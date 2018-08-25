@@ -173,12 +173,12 @@ namespace SerializeMachine.Core
 
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
             {
-                var guid = XMLUtility.GuidOf(serializedObject);
+                var guid = XMLUtility.GuidOfValue(serializedObject);
                 if (guid == Serializator.GUID_NULL) return null;
                 var obj = HeapManager.GetObject(guid);
                 if (obj == null)
                 {
-                    obj = DeresolveInternal(serializedObject, conventionType);
+                    obj = DeresolveInternal(HeapManager.Serialized.GetSerialized(guid), conventionType);
                     HeapManager.Original.AddObject(obj, guid);
                     //HeapManager.Serialized.Push(guid, serializedObject);
                 }
@@ -186,47 +186,6 @@ namespace SerializeMachine.Core
             }
             return DeresolveInternal(serializedObject, conventionType);
         }
-
-        /*
-        public XElement GetFieldSerialized(object obj)
-        {
-            var type = obj.GetType();
-            var convention = TypeManager.ConventionOf(type);
-            var result = TypeDictionary.GetHead(convention);
-
-            if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
-            {
-                Guid guid;
-                if (HeapManager.GetCreateGuid(obj, out guid))
-                    HeapManager.Serialized.Push(guid, Resolve(obj));
-                result.Value = guid.ToString();
-            }
-            else
-            {
-                ResolveToInternal(obj, convention, result);
-            }
-
-            return result;
-        }
-        public object GetFieldDeserialized(XElement serializedObject)
-        {
-            var convention = serializedObject.Name.LocalName;
-
-            if (SerializationUtility.Targeting.IsSaveReferenceInternal(TypeManager.TypeOf(convention)))
-            {
-                Guid guid;
-                if (HeapManager.GetCreateGuid(obj, out guid))
-                    HeapManager.Serialized.Push(guid, Resolve(obj));
-                result.Value = guid.ToString();
-            }
-            else
-            {
-                ResolveToInternal(obj, convention, result);
-            }
-
-            return result;
-        }
-        */
 
         public Serializator()
         {

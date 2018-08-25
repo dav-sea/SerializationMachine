@@ -61,10 +61,10 @@ namespace SerializeMachine
 
             if (overloadSerialized)
                 foreach (var element in serializedHeap.Elements())
-                    Push(new Guid(XMLUtility.GuidOfInternal(element)), element);
+                    Push(new Guid(XMLUtility.GuidOfAttributeInternal(element)), element);
             else
                 foreach (var element in serializedHeap.Elements())
-                    SafeAdd(new Guid(XMLUtility.GuidOfInternal(element)), element);
+                    SafeAdd(new Guid(XMLUtility.GuidOfAttributeInternal(element)), element);
         }
 
         public IDictionary<Guid, XElement> ToDictionary()

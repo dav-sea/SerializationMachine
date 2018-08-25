@@ -16,17 +16,26 @@ namespace SerializeMachine.Utility
         {
             node.SetAttributeValue(Serializator.XML_ATTRIBUTENAME_GUID, guid);
         }
-        public static Guid GuidOf(XElement node)
+        public static Guid GuidOfAttribute(XElement node)
         {
             if (node == null) return Serializator.GUID_NULL;
-            return new Guid(GuidOfInternal(node));    
+            return new Guid(GuidOfAttributeInternal(node));    
         }
-        internal static string GuidOfInternal(XElement node)
+        internal static string GuidOfAttributeInternal(XElement node)
         {
             var attribute = node.Attribute(Serializator.XML_ATTRIBUTENAME_GUID);
-            return attribute == null ? Serializator.GUID_NULL_TOSTRING : attribute.Value;
-                
+            return attribute == null ? Serializator.GUID_NULL_TOSTRING : attribute.Value;  
         }
+        public static Guid GuidOfValue(XElement node)
+        {
+            if (node == null) return Serializator.GUID_NULL;
+            return new Guid(node.Value);
+        }
+        internal static string GuidOfValueInternal(XElement node)
+        {
+            return node.Value;
+        }
+
         internal static bool IsNullOf(XElement node)
         {
             return node.Name.LocalName == Serializator.XML_ELEMENTNAME_NULL;

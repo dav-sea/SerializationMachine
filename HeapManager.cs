@@ -20,6 +20,7 @@ namespace SerializeMachine
             if (!OriginalHeap.TryGetGuid(obj, out guid))
             {
                 guid = Guid.NewGuid();
+                Original.AddObject(obj, guid);
                 return true;
             }
             return false;
@@ -27,8 +28,7 @@ namespace SerializeMachine
         public Guid GetCreateGuid(object obj)
         {
             Guid guid;
-            if (!OriginalHeap.TryGetGuid(obj, out guid))
-                guid = Guid.NewGuid();
+            GetCreateGuid(obj,out guid);
             return guid;
         }
         public object GetObject(Guid guid)

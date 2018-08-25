@@ -32,7 +32,7 @@ namespace SerializeMachine.Utility
            }
            internal static ConstructorInfo GetDefaultConstructor(Type type)
            {
-               return type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public, null, new Type[0], null);
+               return type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public  | BindingFlags.Instance, null, new Type[0], null);
            }
        }
        public static class Targeting
