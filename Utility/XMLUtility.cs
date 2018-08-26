@@ -16,6 +16,8 @@ namespace SerializeMachine.Utility
         {
             node.SetAttributeValue(Serializator.XML_ATTRIBUTENAME_GUID, guid);
         }
+
+        
         public static Guid GuidOfAttribute(XElement node)
         {
             if (node == null) return Serializator.GUID_NULL;
@@ -35,6 +37,12 @@ namespace SerializeMachine.Utility
         {
             return node.Value;
         }
+
+        internal static bool GUIDAttributeConatins(XElement node)
+        {
+            return node.Attribute(Serializator.XML_ATTRIBUTENAME_GUID) != null;
+        }
+
 
         internal static bool IsNullOf(XElement node)
         {

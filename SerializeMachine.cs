@@ -70,7 +70,9 @@ namespace SerializeMachine
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
 
-            return Serializator.Deresolve(Serializator.HeapManager.Serialized.GetSerialized(rootGuid));
+           
+
+            return Serializator.ContextDeresolve(Serializator.HeapManager.Serialized.GetSerialized(rootGuid));
         }
         
         //public object Deserialize(XElement serializedRoot)

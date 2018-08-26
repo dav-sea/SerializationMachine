@@ -15,7 +15,7 @@ namespace SerializeMachine.Resolvers
         }
 
         public abstract void Serialize(System.Xml.Linq.XElement serialized, object resolveObject);
-        public abstract object Deserialzie(System.Xml.Linq.XElement serializedObject);
+        public abstract void Deserialzie(System.Xml.Linq.XElement serializedObject,ref object instance);
 
         public override bool Equals(object obj)
         {

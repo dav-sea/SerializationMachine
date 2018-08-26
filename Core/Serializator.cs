@@ -31,7 +31,9 @@ namespace SerializeMachine.Core
             else
             {
                 var conventionType = serialized.Name.LocalName;
-                return DeresolveInternal(serialized, conventionType);
+                var instance = GetInstance(TypeManager.Dictionary.TypeOf(conventionType));
+                DeresolveInternal(serialized,ref instance, conventionType);
+                return instance;
             }
             
 
@@ -45,9 +47,9 @@ namespace SerializeMachine.Core
         /// <param name="serializedObject">Десериализируемый объект</param>
         /// <param name="convention">Условное обозночение типа</param>
         /// <returns>Результат десериализации</returns>
-        internal object DeresolveInternal(XElement serializedObject, string convention)
+        internal void DeresolveInternal(XElement serializedObject,ref object instance , string convention)
         {
-            return ResolverBank.GetResolver(convention).Deserialzie(serializedObject);
+            ResolverBank.GetResolver(convention).Deserialzie(serializedObject,ref instance);
         }
 
         /// <summary>
@@ -59,9 +61,9 @@ namespace SerializeMachine.Core
         /// <param name="serializedObject">Десериализируемый объект</param>
         /// <param name="resoler">Resolver осуществляющий десериализацию</param>
         /// <returns>Результат десериализации</returns>
-        internal object DeresolveInternal(XElement serializedObject, IResolver resolver)
+        internal void DeresolveInternal(XElement serializedObject,ref object instance, IResolver resolver)
         {
-            return resolver.Deserialzie(serializedObject);
+            resolver.Deserialzie(serializedObject,ref instance);
         }
 
         /// <summary>
@@ -170,21 +172,40 @@ namespace SerializeMachine.Core
 
             var conventionType = serializedObject.Name.LocalName;
             var type = TypeManager.TypeOf(conventionType);
+            object instance;
 
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
             {
-                var guid = XMLUtility.GuidOfValue(serializedObject);
-                if (guid == Serializator.GUID_NULL) return null;
-                var obj = HeapManager.GetObject(guid);
-                if (obj == null)
+                Guid finalGuid;
+
+                if (XMLUtility.GUIDAttributeConatins(serializedObject))
                 {
-                    obj = DeresolveInternal(HeapManager.Serialized.GetSerialized(guid), conventionType);
-                    HeapManager.Original.AddObject(obj, guid);
-                    //HeapManager.Serialized.Push(guid, serializedObject);
+                    finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serializedObject));
+                    instance = GetInstance(type);
+                    HeapManager.Original.AddObject(instance, finalGuid);
+                    DeresolveInternal(serializedObject,ref instance, conventionType);
                 }
-                return obj;
+                else
+                {
+                    finalGuid = new Guid(XMLUtility.GuidOfValueInternal(serializedObject));
+                    instance = HeapManager.Original.ObjectOf(finalGuid);
+                    if (instance == null)
+                    {
+                        instance = ContextDeresolve(HeapManager.Serialized.GetSerialized(finalGuid));;
+                    }
+                }
             }
-            return DeresolveInternal(serializedObject, conventionType);
+            else
+            {
+                instance = GetInstance(type);
+                DeresolveInternal(serializedObject,ref instance, conventionType);
+            }
+            return instance;
+        }
+
+        private object GetInstance(Type type)
+        {
+            return typeof(string).IsAssignableFrom(type) ? string.Empty : SerializationUtility.InstantiateUninitializedObject(type);
         }
 
         public Serializator()

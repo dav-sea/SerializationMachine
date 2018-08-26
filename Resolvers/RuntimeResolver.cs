@@ -26,18 +26,14 @@ namespace SerializeMachine.Resolvers
                 serialized.Add(Serializator.ContextResolve(Fields[i].GetValue(obj)));
             }
         }
-        public override sealed object Deserialzie(XElement serialized)
+        public override sealed void Deserialzie(XElement serialized,ref object instance)
         {
             var reflectionEnumerator = Fields.GetEnumerator();
             var serializedEnumerator = serialized.Elements().GetEnumerator();
 
-            object instance = ObjectFactory.Instantiate();
-
             if(instance != null)
                 while (reflectionEnumerator.MoveNext() && serializedEnumerator.MoveNext())
                     reflectionEnumerator.Current.SetValue(instance, Serializator.ContextDeresolve(serializedEnumerator.Current));
-
-            return instance;
         }
 
         public RuntimeResolver(Type resolveType, Serializator serializator)

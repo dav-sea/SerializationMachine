@@ -8,9 +8,9 @@ namespace SerializeMachine.Resolvers.Primitives
         {
             serialized.Value = resolveObject.ToString();
         }
-        public object Deserialzie(XElement serialized)
+        public void Deserialzie(XElement serialized,ref object instance)
         {
-            return System.Decimal.Parse(serialized.Value);
+            instance = System.Decimal.Parse(serialized.Value);
         }
     }
 }

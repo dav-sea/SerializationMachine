@@ -15,6 +15,6 @@ namespace SerializeMachine.Core
         /// </summary>
         /// <param name="serialized">Сериализированная версия объекта</param>
         /// <returns>Дессериализированный объект</returns>
-        object Deserialzie(XElement serializedObject);
+        void Deserialzie(XElement serializedObject,ref object instance);
     }
 }

@@ -8,9 +8,9 @@ namespace SerializeMachine.Resolvers.Primitives
         {
             
         }
-        public object Deserialzie(XElement serialized)
+        public void Deserialzie(XElement serialized,ref object instance)
         {
-            return new object();
+            instance = new object();
         }
     }
 }
