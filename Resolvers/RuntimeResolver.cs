@@ -16,7 +16,6 @@ namespace SerializeMachine.Resolvers
     public sealed class RuntimeResolver : Resolver
     {
         private readonly IList<FieldInfo> Fields;
-        private readonly IFactory ObjectFactory;
 
         public override sealed void Serialize(XElement serialized, object obj)
         {
@@ -40,20 +39,15 @@ namespace SerializeMachine.Resolvers
             : this(serializator, resolveType, true) { }
 
         public RuntimeResolver(Serializator serializator, Type resolveType,bool useConstructor)
-            :base(serializator,resolveType)
+            :base(resolveType,useConstructor,serializator)
         {
             if (resolveType != null)
             {
                 Fields = SerializationUtility.Targeting.GetSerializableFieldsInternal(resolveType);
-                if (useConstructor)
-                    ObjectFactory = Factory.CreateConstructorFactory(resolveType);
-                else
-                    ObjectFactory = Factory.CreateUninitializedFactory(resolveType);
             }
             else
             {
                 Fields = new FieldInfo[0];
-                ObjectFactory = Factory.CreateCustomFactory(null);
             }
         }
     }

@@ -4,13 +4,14 @@ namespace SerializeMachine.Resolvers.Primitives
 {
     public sealed class UInt32Resolver : Core.IResolver
     {
-        public void Serialize(XElement serialized, object obj)
+        public override void Serialize(XElement serialized, object obj)
         {
             serialized.Value = obj.ToString();
         }
-        public void Deserialzie(XElement serialized,ref object instance)
+        public override void Deserialzie(XElement serialized,ref object instance)
         {
             instance = System.UInt32.Parse(serialized.Value);
         }
+        public UInt32Resolver() : base(Utility.TypeOf<uint>.Type, null) { }
     }
 }

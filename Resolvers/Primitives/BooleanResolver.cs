@@ -4,13 +4,14 @@ namespace SerializeMachine.Resolvers.Primitives
 {
     public sealed class BooleanResolver : Core.IResolver
     {
-        public void Serialize(XElement serialized, object resolveObject)
+        public override void Serialize(XElement serialized, object resolveObject)
         {
             serialized.Value = resolveObject.ToString();
         }
-        public void Deserialzie(XElement serialized,ref object instance)
+        public override void Deserialzie(XElement serialized,ref object instance)
         {
             instance = System.Boolean.Parse(serialized.Value);
         }
+        public BooleanResolver() : base(Utility.TypeOf<bool>.Type, null) { }
     }
 }

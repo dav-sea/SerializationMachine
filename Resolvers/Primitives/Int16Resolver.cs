@@ -7,13 +7,14 @@ namespace SerializeMachine.Resolvers.Primitives
     /// </summary>
     public sealed class Int16Resolver : Core.IResolver
     {
-        public void Serialize(XElement serialized, object resolveObject)
+        public override void Serialize(XElement serialized, object resolveObject)
         {
             serialized.Value = resolveObject.ToString();
         }
-        public void Deserialzie(XElement serialized,ref object instance)
+        public override void Deserialzie(XElement serialized,ref object instance)
         {
             instance = System.Int16.Parse(serialized.Value);
         }
+        public Int16Resolver() : base(Utility.TypeOf<short>.Type, null) { }
     }
 }

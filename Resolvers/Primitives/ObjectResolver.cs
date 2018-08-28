@@ -4,13 +4,19 @@ namespace SerializeMachine.Resolvers.Primitives
 {
     public sealed class ObjectResolver : Core.IResolver
     {
-        public void Serialize(XElement serialized, object resolveObject)
+        public override void Serialize(XElement serialized, object resolveObject)
         {
             
         }
-        public void Deserialzie(XElement serialized,ref object instance)
+        public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = new object();
+            
+        }
+        public ObjectResolver() : base(Utility.TypeOf<object>.Type, ObjectFactoryFunc) { }
+        
+        private static object ObjectFactoryFunc()
+        {
+            return new object();
         }
     }
 }

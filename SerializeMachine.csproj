@@ -53,6 +53,7 @@
     <Compile Include="Resolvers\Primitives\BooleanResolver.cs" />
     <Compile Include="Resolvers\Primitives\ByteResolver.cs" />
     <Compile Include="Resolvers\Primitives\CharResolver.cs" />
+    <Compile Include="Resolvers\Resolver.cs" />
     <Compile Include="Resolvers\Primitives\DecimalResolver.cs" />
     <Compile Include="Resolvers\Primitives\DoubleResolver.cs" />
     <Compile Include="Resolvers\Primitives\ObjectResolver.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Resolvers\Primitives\UInt16Resolver.cs" />
     <Compile Include="Resolvers\Primitives\UInt32Resolver.cs" />
     <Compile Include="Resolvers\Primitives\UInt64Resolver.cs" />
-    <Compile Include="Resolvers\Resolver.cs" />
     <Compile Include="Resolvers\RuntimeResolver.cs" />
     <Compile Include="SerializedHeap.cs" />
     <Compile Include="SerializeMachine.cs" />
