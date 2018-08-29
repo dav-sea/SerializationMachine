@@ -31,8 +31,9 @@ namespace SerializeMachine.Core
             else
             {
                 var conventionType = serialized.Name.LocalName;
-                var instance = GetInstance(TypeManager.Dictionary.TypeOf(conventionType));
-                DeresolveInternal(serialized,ref instance, conventionType);
+                var resolver = ResolverBank.GetResolver(conventionType);
+                var instance = resolver.GetNewInstance();
+                DeresolveInternal(serialized,ref instance,resolver);
                 return instance;
             }
             
@@ -172,6 +173,8 @@ namespace SerializeMachine.Core
 
             var conventionType = serializedObject.Name.LocalName;
             var type = TypeManager.TypeOf(conventionType);
+            var resolver = ResolverBank.GetResolver(conventionType);
+
             object instance;
 
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
@@ -181,9 +184,9 @@ namespace SerializeMachine.Core
                 if (XMLUtility.GUIDAttributeConatins(serializedObject))
                 {
                     finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serializedObject));
-                    instance = GetInstance(type);
+                    instance = resolver.GetNewInstance();
                     HeapManager.Original.AddObject(instance, finalGuid);
-                    DeresolveInternal(serializedObject,ref instance, conventionType);
+                    DeresolveInternal(serializedObject, ref instance, resolver);
                 }
                 else
                 {
@@ -197,15 +200,10 @@ namespace SerializeMachine.Core
             }
             else
             {
-                instance = GetInstance(type);
-                DeresolveInternal(serializedObject,ref instance, conventionType);
+                instance = resolver.GetNewInstance();
+                DeresolveInternal(serializedObject, ref instance, resolver);
             }
             return instance;
-        }
-
-        private object GetInstance(Type type)
-        {
-            return typeof(string).IsAssignableFrom(type) ? string.Empty : SerializationUtility.InstantiateUninitializedObject(type);
         }
 
         public Serializator()
