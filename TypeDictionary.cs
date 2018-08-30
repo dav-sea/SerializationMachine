@@ -54,6 +54,11 @@ namespace SerializeMachine
             return TypeList.TryGetValue(convention, out type);
         }
 
+        public bool ContainsConvention(string convention)
+        {
+            return TypeList.ContainsKey(convention);
+        }
+
         public void OverloadConvention(Type type, string convention)
         {
             DeleteAllConventionOf(type);

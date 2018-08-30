@@ -69,10 +69,11 @@ namespace SerializeMachine.Utility
            }
            internal static List<FieldInfo> GetSerializableFieldsInternal(FieldInfo[] fields)
            {
+               var resilt = new List<FieldInfo>(fields.Length);
                for (int i = 0; i < fields.Length; i++)
-                   if (!Targeting.IsSerializationTarget(fields[i]))
-                       fields[i] = null;
-               return new List<FieldInfo>(fields);
+                   if (Targeting.IsSerializationTarget(fields[i]))
+                       resilt.Add(fields[i]);
+               return resilt;
            }
        }
     }

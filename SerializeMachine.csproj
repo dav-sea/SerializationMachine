@@ -42,11 +42,13 @@
   <ItemGroup>
     <Compile Include="ConventionConvertor.cs" />
     <Compile Include="Core\IResolver.cs" />
+    <Compile Include="Core\ITypeManager.cs" />
     <Compile Include="Core\Serializator.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="HeapManager.cs" />
     <Compile Include="IReadOnlyResolverStorage.cs" />
     <Compile Include="IResolverStorage.cs" />
+    <Compile Include="Managers\TypeManager.cs" />
     <Compile Include="ResolverBank.cs" />
     <Compile Include="ResolverFacrory.cs" />
     <Compile Include="ResolverStorage.cs" />

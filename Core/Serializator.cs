@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 
 using SerializeMachine.Utility;
+using SerializeMachine.Managers;
 
 namespace SerializeMachine.Core
 {
@@ -209,7 +210,7 @@ namespace SerializeMachine.Core
 
         public Serializator()
         {
-            TypeManager = new global::SerializeMachine.TypeManager();
+            TypeManager = new TypeManager();
             ResolverBank = new global::SerializeMachine.ResolverBank(this);
             HeapManager = new HeapManager(this);
         }
