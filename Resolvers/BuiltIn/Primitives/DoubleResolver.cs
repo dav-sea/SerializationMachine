@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class StringResolver : Core.IResolver
+    public sealed class DoubleResolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -10,12 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = serialized.Value;
+            instance = System.Double.Parse(serialized.Value);
         }
-        public StringResolver() : base(Utility.TypeOf<string>.Type, StringFactoryFunc) { }
-        private static object StringFactoryFunc()
+        public DoubleResolver() : base(Utility.TypeOf<double>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
         {
-            return string.Empty;
+            return 0.0;
         }
     }
 }

@@ -15,6 +15,10 @@ namespace SerializeMachine.Resolvers.Primitives
         {
             instance = System.Int16.Parse(serialized.Value);
         }
-        public Int16Resolver() : base(Utility.TypeOf<short>.Type, null) { }
+        public Int16Resolver() : base(Utility.TypeOf<short>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return (short)0;
+        }
     }
 }

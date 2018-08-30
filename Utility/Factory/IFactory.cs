@@ -9,4 +9,12 @@ namespace SerializeMachine.Utility
     {
         object Instantiate();
     }
+    public interface IFactoryArg
+    {
+        object Instatiate(object arg);
+    }
+    public interface IFactoryArg<TArg>
+    {
+        object Instatiate(TArg arg);
+    }
 }

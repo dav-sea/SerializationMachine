@@ -22,18 +22,18 @@ namespace SerializeMachine.Core
             HeapManager.FlashHeaps();
         }
 
-        public object Deresolve(XElement serialized)
+        public object Deresolve(XElement serializedObject)
         {
-            if (XMLUtility.IsNullOf(serialized))
+            if (XMLUtility.IsNullOf(serializedObject))
             {
                 return null;
             }
             else
             {
-                var conventionType = serialized.Name.LocalName;
+                var conventionType = serializedObject.Name.LocalName;
                 var resolver = ResolverBank.GetResolver(conventionType);
-                var instance = resolver.GetNewInstance();
-                DeresolveInternal(serialized,ref instance,resolver);
+                var instance = resolver.ManagedObjectOf(serializedObject);
+                DeresolveInternal(serializedObject, ref instance, resolver);
                 return instance;
             }
             
@@ -184,8 +184,9 @@ namespace SerializeMachine.Core
                 if (XMLUtility.GUIDAttributeConatins(serializedObject))
                 {
                     finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serializedObject));
-                    instance = resolver.GetNewInstance();
-                    HeapManager.Original.AddObject(instance, finalGuid);
+                    instance = resolver.ManagedObjectOf(serializedObject);
+                    if(instance != null)
+                        HeapManager.Original.AddObject(instance, finalGuid);
                     DeresolveInternal(serializedObject, ref instance, resolver);
                 }
                 else
@@ -200,7 +201,7 @@ namespace SerializeMachine.Core
             }
             else
             {
-                instance = resolver.GetNewInstance();
+                instance = resolver.ManagedObjectOf(serializedObject);
                 DeresolveInternal(serializedObject, ref instance, resolver);
             }
             return instance;

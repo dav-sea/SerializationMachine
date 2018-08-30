@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class Int32Resolver : Core.IResolver
+    public sealed class UInt64Resolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object obj)
         {
@@ -10,8 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.Int32.Parse(serialized.Value);
+            instance = System.UInt64.Parse(serialized.Value);
         }
-        public Int32Resolver() : base(Utility.TypeOf<int>.Type, null) { }
+        public UInt64Resolver() : base(Utility.TypeOf<ulong>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return (ulong)0;
+        }
     }
 }

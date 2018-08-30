@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class CharResolver : Core.IResolver
+    public sealed class SByteResolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -10,8 +10,14 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.Char.Parse(serialized.Value);
+            instance = System.SByte.Parse(serialized.Value);
         }
-        public CharResolver() : base(Utility.TypeOf<char>.Type, null) { }
+        public SByteResolver() : base(Utility.TypeOf<sbyte>.Type) { }
+
+
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return (sbyte)0;
+        }
     }
 }

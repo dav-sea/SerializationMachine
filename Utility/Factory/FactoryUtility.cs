@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace SerializeMachine.Utility
 {
-    public static class Factory
+    public static class FactoryUtility
     {
         public static IFactory CreateConstructorFactory(ConstructorInfo constructor)
         {
@@ -27,6 +27,10 @@ namespace SerializeMachine.Utility
         {
             if (instantiator == null) return new NullFactory();
             return new FactoryByCustomFunc(instantiator);
+        }
+        public static IFactory ToIFactory<T>(this Factory.Generic.IFactory<T> genericFactory)
+        {
+            return CreateCustomFactory(()=>genericFactory.Instantiate());
         }
     }
 }

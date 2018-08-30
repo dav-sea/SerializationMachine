@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class SByteResolver : Core.IResolver
+    public sealed class BooleanResolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -10,8 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.SByte.Parse(serialized.Value);
+            instance = System.Boolean.Parse(serialized.Value);
         }
-        public SByteResolver() : base(Utility.TypeOf<sbyte>.Type, null) { }
+        public BooleanResolver() : base(Utility.TypeOf<bool>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return false;
+        }
     }
 }

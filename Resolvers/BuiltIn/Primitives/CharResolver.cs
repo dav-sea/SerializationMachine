@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class BooleanResolver : Core.IResolver
+    public sealed class CharResolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -10,8 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.Boolean.Parse(serialized.Value);
+            instance = System.Char.Parse(serialized.Value);
         }
-        public BooleanResolver() : base(Utility.TypeOf<bool>.Type, null) { }
+        public CharResolver() : base(Utility.TypeOf<char>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return '\0';
+        }
     }
 }

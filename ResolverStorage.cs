@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using SerializeMachine.Core;
 using SerializeMachine.Resolvers.Primitives;
+using SerializeMachine.Resolvers;
+using SerializeMachine.Utility;
 
 namespace SerializeMachine
 {
@@ -38,21 +40,21 @@ namespace SerializeMachine
             var typeManager = targetSerializator.TypeManager;
             var storage = targetSerializator.ResolverBank.Storage;
 
-            storage.AddResolver(new BooleanResolver(),typeManager.ConventionOf(typeof(bool)));
-            storage.AddResolver(new ByteResolver(), typeManager.ConventionOf(typeof(byte)));
-            storage.AddResolver(new SByteResolver(), typeManager.ConventionOf(typeof(sbyte)));
-            storage.AddResolver(new CharResolver(), typeManager.ConventionOf(typeof(char)));
-            storage.AddResolver(new DecimalResolver(), typeManager.ConventionOf(typeof(decimal)));
-            storage.AddResolver(new DoubleResolver(), typeManager.ConventionOf(typeof(double)));
-            storage.AddResolver(new SingleResolver(), typeManager.ConventionOf(typeof(float)));
-            storage.AddResolver(new Int32Resolver(), typeManager.ConventionOf(typeof(int)));
-            storage.AddResolver(new UInt32Resolver(), typeManager.ConventionOf(typeof(uint)));
-            storage.AddResolver(new Int64Resolver(), typeManager.ConventionOf(typeof(long)));
-            storage.AddResolver(new UInt64Resolver(), typeManager.ConventionOf(typeof(ulong)));
-            storage.AddResolver(new ObjectResolver(), typeManager.ConventionOf(typeof(object)));
-            storage.AddResolver(new Int16Resolver(), typeManager.ConventionOf(typeof(short)));
-            storage.AddResolver(new UInt16Resolver(), typeManager.ConventionOf(typeof(ushort)));
-            storage.AddResolver(new StringResolver(), typeManager.ConventionOf(typeof(string)));
+            storage.AddResolver(new BooleanResolver(),typeManager.ConventionOf(TypeOf<bool>.Type));
+            storage.AddResolver(new ByteResolver(), typeManager.ConventionOf(TypeOf<byte>.Type));
+            storage.AddResolver(new SByteResolver(), typeManager.ConventionOf(TypeOf<sbyte>.Type));
+            storage.AddResolver(new CharResolver(), typeManager.ConventionOf(TypeOf<char>.Type));
+            storage.AddResolver(new DecimalResolver(), typeManager.ConventionOf(TypeOf<decimal>.Type));
+            storage.AddResolver(new DoubleResolver(), typeManager.ConventionOf(TypeOf<double>.Type));
+            storage.AddResolver(new SingleResolver(), typeManager.ConventionOf(TypeOf<float>.Type));
+            storage.AddResolver(new Int32Resolver(), typeManager.ConventionOf(TypeOf<int>.Type));
+            storage.AddResolver(new UInt32Resolver(), typeManager.ConventionOf(TypeOf<uint>.Type));
+            storage.AddResolver(new Int64Resolver(), typeManager.ConventionOf(TypeOf<long>.Type));
+            storage.AddResolver(new UInt64Resolver(), typeManager.ConventionOf(TypeOf<ulong>.Type));
+            storage.AddResolver(new ObjectResolver(), typeManager.ConventionOf(TypeOf<object>.Type));
+            storage.AddResolver(new Int16Resolver(), typeManager.ConventionOf(TypeOf<short>.Type));
+            storage.AddResolver(new UInt16Resolver(), typeManager.ConventionOf(TypeOf<ushort>.Type));
+            storage.AddResolver(new StringResolver(), typeManager.ConventionOf(TypeOf<string>.Type));
         }
         
     }

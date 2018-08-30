@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializeMachine.Resolvers.Primitives
+namespace SerializeMachine.Resolvers
 {
     public sealed class ObjectResolver : Core.IResolver
     {
@@ -12,9 +12,9 @@ namespace SerializeMachine.Resolvers.Primitives
         {
             
         }
-        public ObjectResolver() : base(Utility.TypeOf<object>.Type, ObjectFactoryFunc) { }
-        
-        private static object ObjectFactoryFunc()
+        public ObjectResolver() : base(Utility.TypeOf<object>.Type) { }
+
+        protected internal override object ManagedObjectOf(XElement serializedObject)
         {
             return new object();
         }

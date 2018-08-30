@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class UInt64Resolver : Core.IResolver
+    public sealed class UInt16Resolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object obj)
         {
@@ -10,8 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.UInt64.Parse(serialized.Value);
+            instance = System.UInt16.Parse(serialized.Value);
         }
-        public UInt64Resolver() : base(Utility.TypeOf<ulong>.Type, null) { }
+        public UInt16Resolver() : base(Utility.TypeOf<ushort>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return (ushort)0;
+        }
     }
 }

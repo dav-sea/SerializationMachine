@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SerializeMachine.Core;
+using System.Xml.Linq;
+using SerializeMachine.Utility;
+using System.Reflection;
+
+namespace SerializeMachine.Resolvers.BuiltIn
+{
+    public sealed class SimpleArrayResolver : IResolver
+    {
+        private readonly Type ElementType;
+        private readonly Serializator Serializator;
+
+        public override void Serialize(XElement serialized, object resolveObject)
+        {
+            var array = resolveObject as Array;
+            var leng = array.GetLength(1);
+
+            serialized.SetAttributeValue("SIZE", leng);
+
+            for (int i = 0; i < leng; i++)
+                serialized.Add(Serializator.ContextResolve(array.GetValue(i)));
+        }
+
+        public override void Deserialzie(XElement serializedObject, ref object instance)
+        {
+            var array = instance as Array;
+            var leng = array.GetLength(1);
+
+            int currentIndex = 0;
+            var serializedEnumerator = serializedObject.Elements().GetEnumerator();
+
+            while (serializedEnumerator.MoveNext())
+            {
+                array.SetValue(Serializator.ContextDeresolve(serializedEnumerator.Current), currentIndex++);
+            }
+
+        }
+
+        public SimpleArrayResolver(Type resolveType, Serializator serializator)
+            : base(resolveType)
+        {
+            if (!resolveType.IsArray) throw new ArgumentException();
+            this.Serializator = serializator;
+            ElementType = resolveType.GetGenericArguments()[0];
+        }
+
+
+        protected internal override sealed object ManagedObjectOf(XElement serializedObject)
+        {
+            var sizeAttribute = serializedObject.Attribute("SIZE");
+            var leng = int.Parse(sizeAttribute.Value);
+            return Array.CreateInstance(ElementType, leng);
+        }
+    }
+}

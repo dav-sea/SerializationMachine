@@ -2,7 +2,7 @@
 
 namespace SerializeMachine.Resolvers.Primitives
 {
-    public sealed class DecimalResolver : Core.IResolver
+    public sealed class ByteResolver : Core.IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -10,8 +10,12 @@ namespace SerializeMachine.Resolvers.Primitives
         }
         public override void Deserialzie(XElement serialized,ref object instance)
         {
-            instance = System.Decimal.Parse(serialized.Value);
+            instance = System.Byte.Parse(serialized.Value);
         }
-        public DecimalResolver() : base(Utility.TypeOf<decimal>.Type, null) { }
+        public ByteResolver() : base(Utility.TypeOf<byte>.Type) { }
+        protected internal override object ManagedObjectOf(XElement serializedObject)
+        {
+            return (byte)0;
+        }
     }
 }
