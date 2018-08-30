@@ -11,11 +11,15 @@ namespace SerializeMachine
     {
         public string ConventionOf(Type type)
         {
+            if (type.IsArray)
+            {
+                return type.FullName.Replace("[]", "__ARRAY");
+            }
             return type.FullName;
         }
         public Type TypeOf(string convention)
         {
-            return Type.GetType(convention);
+            return Type.GetType(convention.Replace("__ARRAY", "[]"));
         }
 
         public ConventionConvertor()

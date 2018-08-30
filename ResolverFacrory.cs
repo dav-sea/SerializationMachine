@@ -5,6 +5,7 @@ using System.Reflection;
 using SerializeMachine.Resolvers;
 using SerializeMachine.Utility;
 using SerializeMachine.Resolvers.Primitives;
+using SerializeMachine.Resolvers.BuiltIn;
 
 namespace SerializeMachine
 {
@@ -38,6 +39,16 @@ namespace SerializeMachine
             }
             else
             {
+                if (type.IsArray)
+                {
+                    //var elementType = type.GetGenericArguments()[0];
+                    var rank = type.GetArrayRank();
+                    if (rank == 1)
+                    {
+                        return new SimpleArrayResolver(type, Serializator);
+                    }
+                    else throw new InvalidOperationException();
+                }
                 if (TypeOf<Object>.Equals(type))return new ObjectResolver();
                 if (TypeOf<String>.Equals(type))return new StringResolver();
             }

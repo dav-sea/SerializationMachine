@@ -17,7 +17,7 @@ namespace SerializeMachine.Resolvers.BuiltIn
         public override void Serialize(XElement serialized, object resolveObject)
         {
             var array = resolveObject as Array;
-            var leng = array.GetLength(1);
+            var leng = array.GetLength(0);
 
             serialized.SetAttributeValue("SIZE", leng);
 
@@ -28,7 +28,7 @@ namespace SerializeMachine.Resolvers.BuiltIn
         public override void Deserialzie(XElement serializedObject, ref object instance)
         {
             var array = instance as Array;
-            var leng = array.GetLength(1);
+            var leng = array.GetLength(0);
 
             int currentIndex = 0;
             var serializedEnumerator = serializedObject.Elements().GetEnumerator();
@@ -45,7 +45,7 @@ namespace SerializeMachine.Resolvers.BuiltIn
         {
             if (!resolveType.IsArray) throw new ArgumentException();
             this.Serializator = serializator;
-            ElementType = resolveType.GetGenericArguments()[0];
+            ElementType = resolveType.GetElementType(); ;
         }
 
 
