@@ -58,7 +58,7 @@ namespace SerializeMachine
                 return new SerializableResolver(type, Serializator);
             }
 
-            return new RuntimeResolver(type, Serializator);
+            return RuntimeResolver.ConfigurateRuntimeResolver(type, Serializator);
         }
 
         public ResolverFacrory(Serializator serializator)

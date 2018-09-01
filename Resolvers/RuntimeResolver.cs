@@ -50,5 +50,27 @@ namespace SerializeMachine.Resolvers
                 Fields = new FieldInfo[0];
             }
         }
+
+        private RuntimeResolver(Type resolveType, Serializator serializator,IFactory factory)
+            :base(factory,resolveType,serializator)
+        {
+            if (resolveType != null)
+            {
+                Fields = SerializationUtility.Targeting.GetSerializableFieldsInternal(resolveType);
+            }
+            else
+            {
+                Fields = new FieldInfo[0];
+            }
+        }
+
+        public static RuntimeResolver ConfigurateRuntimeResolver(Type resolveType, Serializator serializator)
+        {
+            var defaultConstructor = SerializationUtility.Reflection.GetDefaultConstructor(resolveType);
+            if (defaultConstructor != null)
+                return new RuntimeResolver(resolveType, serializator, FactoryUtility.CreateConstructorFactory(defaultConstructor));
+
+            return new RuntimeResolver(serializator, resolveType, false);
+        }
     }
 }
