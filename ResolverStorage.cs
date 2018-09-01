@@ -24,6 +24,11 @@ namespace SerializeMachine
             return result;
         }
 
+        public bool ContainsResolverFor(string convention)
+        {
+            return ResolverList.ContainsKey(convention);
+        }
+
         public TypeDictionary GetTypeDictionary()
         {
             return TypeDictionary;

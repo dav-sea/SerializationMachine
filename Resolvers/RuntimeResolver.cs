@@ -22,7 +22,7 @@ namespace SerializeMachine.Resolvers
             var leng = Fields.Count;
             for (int i = 0; i < leng; i++)
             {
-                serialized.Add(Serializator.ContextResolve(Fields[i].GetValue(obj)));
+                serialized.Add(Serializator.AutoResolve(Fields[i].GetValue(obj)));
             }
         }
         public override sealed void Deserialzie(XElement serialized,ref object instance)
@@ -32,7 +32,7 @@ namespace SerializeMachine.Resolvers
 
             if(instance != null)
                 while (reflectionEnumerator.MoveNext() && serializedEnumerator.MoveNext())
-                    reflectionEnumerator.Current.SetValue(instance, Serializator.ContextDeresolve(serializedEnumerator.Current));
+                    reflectionEnumerator.Current.SetValue(instance, Serializator.AutoDeresolve(serializedEnumerator.Current));
         }
 
         public RuntimeResolver(Type resolveType, Serializator serializator)

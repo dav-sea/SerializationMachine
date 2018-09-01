@@ -70,6 +70,8 @@
     <Compile Include="Resolvers\BuiltIn\Primitives\UInt32Resolver.cs" />
     <Compile Include="Resolvers\BuiltIn\Primitives\UInt64Resolver.cs" />
     <Compile Include="Resolvers\RuntimeResolver.cs" />
+    <Compile Include="Resolvers\SerializableResolver.cs" />
+    <Compile Include="Resolvers\SerializationInfoResolver.cs" />
     <Compile Include="SerializedHeap.cs" />
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

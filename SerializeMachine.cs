@@ -51,7 +51,7 @@ namespace SerializeMachine
         {
             Serializator.FlashHeaps();
 
-            Serializator.ContextResolve(root);
+            Serializator.AutoResolve(root);
             
             var package = new XElement("SMPackage");
 
@@ -72,7 +72,7 @@ namespace SerializeMachine
 
            
 
-            return Serializator.ContextDeresolve(Serializator.HeapManager.Serialized.GetSerialized(rootGuid));
+            return Serializator.AutoDeresolve(Serializator.HeapManager.Serialized.GetSerialized(rootGuid));
         }
         
         //public object Deserialize(XElement serializedRoot)

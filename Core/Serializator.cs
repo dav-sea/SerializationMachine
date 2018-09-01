@@ -23,6 +23,7 @@ namespace SerializeMachine.Core
             HeapManager.FlashHeaps();
         }
 
+
         public object Deresolve(XElement serializedObject)
         {
             if (XMLUtility.IsNullOf(serializedObject))
@@ -110,7 +111,14 @@ namespace SerializeMachine.Core
                 return serialized;
             }
         }
-        
+        public void ResolveTo(object resolveObject, XElement serializeHere)
+        {
+            ResolveToInternal(resolveObject, ResolverBank.GetResolver(TypeManager.ConventionOf(resolveObject.GetType())), serializeHere);
+        }
+        public void DeresolveTo(object instance, XElement serializedObject)
+        {
+            DeresolveInternal(serializedObject, ref instance, ResolverBank.GetResolver(TypeManager.ConventionOf(instance.GetType())));
+        }
         /// <summary>
         /// Сериализирует объект resolveObject в xml-узел serializeHere используя действительный сериализатор для объектов типа conventionType
         /// Не допускается значение null ни для какаих входных параметров.
@@ -139,7 +147,7 @@ namespace SerializeMachine.Core
             resoler.Serialize(serializeHere, resolveObject);
         }
 
-        public XElement ContextResolve(object resolveObject)
+        public XElement AutoResolve(object resolveObject)
         {
             if (resolveObject == null)
                 return XMLUtility.CreateNullNode();
@@ -149,25 +157,10 @@ namespace SerializeMachine.Core
             //Для начала пытаемся понять с чем мы вообще работаем 
             //TODO WORKING WITH TYPE MANAGER!
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
-            {
-                Guid finalGuid;
-                //Метод GetCreateGuid(object,out Guid) возвращает bool значение которого отвечает на вопрос: 
-                //Был ли создан новый Guid для этого объекта
-                if(HeapManager.GetCreateGuid(resolveObject,out finalGuid))
-                    //Для объекта resolveObject уже создан Guid методом GetCreateGuid
-                    //Поэтому теперь мы обновляем сериализированное состояние объекта и добавляем его в кучу 
-                    //сериалихированных объектов
-                    HeapManager.Serialized.Push(finalGuid, ResolveInternal(resolveObject,conventionType));
-
-                //В случае если объект resolveObject существует в куче, предпологается что он также 
-                //существет и в куче сериализированных объектов.
-                //В конечном счете, в итоговой xml-узел, в качестве значения, будет помещен guid указывающий на объект resolveObject
-                return XMLUtility.CreateReferenceNode(conventionType, finalGuid.ToString());
-            }
+                return HeapResolve(resolveObject, conventionType);
             return ResolveInternal(resolveObject, conventionType);
-            
         }
-        public object ContextDeresolve(XElement serializedObject)
+        public object AutoDeresolve(XElement serializedObject)
         {
             if (XMLUtility.IsNullOf(serializedObject))
                 return null;
@@ -176,37 +169,59 @@ namespace SerializeMachine.Core
             var type = TypeManager.TypeOf(conventionType);
             var resolver = ResolverBank.GetResolver(conventionType);
 
-            object instance;
-
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
             {
-                Guid finalGuid;
-
-                if (XMLUtility.GUIDAttributeConatins(serializedObject))
-                {
-                    finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serializedObject));
-                    instance = resolver.ManagedObjectOf(serializedObject);
-                    if(instance != null)
-                        HeapManager.Original.AddObject(instance, finalGuid);
-                    DeresolveInternal(serializedObject, ref instance, resolver);
-                }
-                else
-                {
-                    finalGuid = new Guid(XMLUtility.GuidOfValueInternal(serializedObject));
-                    instance = HeapManager.Original.ObjectOf(finalGuid);
-                    if (instance == null)
-                    {
-                        instance = ContextDeresolve(HeapManager.Serialized.GetSerialized(finalGuid));;
-                    }
-                }
+                return HeapDeresolve(serializedObject, resolver);
             }
             else
             {
-                instance = resolver.ManagedObjectOf(serializedObject);
+                object instance = resolver.ManagedObjectOf(serializedObject);
                 DeresolveInternal(serializedObject, ref instance, resolver);
+                return instance;
             }
+        }
+
+        internal XElement HeapResolve(object resolveObject, string conventionType)
+        {
+            Guid finalGuid;
+            //Метод GetCreateGuid(object,out Guid) возвращает bool значение которого отвечает на вопрос: 
+            //Был ли создан новый Guid для этого объекта
+            if (HeapManager.GetCreateGuid(resolveObject, out finalGuid))
+                //Для объекта resolveObject уже создан Guid методом GetCreateGuid
+                //Поэтому теперь мы обновляем сериализированное состояние объекта и добавляем его в кучу сериализированных объектов
+                HeapManager.Serialized.Push(finalGuid, ResolveInternal(resolveObject, conventionType));
+
+            //В случае если объект resolveObject существует в куче, предпологается что он также 
+            //существет и в куче сериализированных объектов.
+            //В конечном счете, в итоговой xml-узел, в качестве значения, будет помещен guid указывающий на объект resolveObject
+            return XMLUtility.CreateReferenceNode(conventionType, finalGuid.ToString());
+        }
+        internal object HeapDeresolve(XElement serialized, IResolver resolver)
+        {
+            object instance;
+            Guid finalGuid;
+
+            if (XMLUtility.GUIDAttributeConatins(serialized))
+            {
+                finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serialized));
+                instance = resolver.ManagedObjectOf(serialized);
+                if (instance != null)
+                    HeapManager.Original.AddObject(instance, finalGuid);
+                DeresolveInternal(serialized, ref instance, resolver);
+            }
+            else
+            {
+                finalGuid = new Guid(XMLUtility.GuidOfValueInternal(serialized));
+                instance = HeapManager.Original.ObjectOf(finalGuid);
+                if (instance == null)
+                {
+                    instance = AutoDeresolve(HeapManager.Serialized.GetSerialized(finalGuid)); ;
+                }
+            }
+
             return instance;
         }
+
 
         public Serializator()
         {

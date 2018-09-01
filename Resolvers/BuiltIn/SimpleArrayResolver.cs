@@ -22,7 +22,7 @@ namespace SerializeMachine.Resolvers.BuiltIn
             serialized.SetAttributeValue("SIZE", leng);
 
             for (int i = 0; i < leng; i++)
-                serialized.Add(Serializator.ContextResolve(array.GetValue(i)));
+                serialized.Add(Serializator.AutoResolve(array.GetValue(i)));
         }
 
         public override void Deserialzie(XElement serializedObject, ref object instance)
@@ -35,7 +35,7 @@ namespace SerializeMachine.Resolvers.BuiltIn
 
             while (serializedEnumerator.MoveNext())
             {
-                array.SetValue(Serializator.ContextDeresolve(serializedEnumerator.Current), currentIndex++);
+                array.SetValue(Serializator.AutoDeresolve(serializedEnumerator.Current), currentIndex++);
             }
 
         }

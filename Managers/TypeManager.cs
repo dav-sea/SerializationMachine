@@ -34,7 +34,7 @@ namespace SerializeMachine.Managers
 
         private string CreateConvention(int number)
         {
-            var result = "_" + Convert.ToString(number, 36);
+            var result = "_" + Convert.ToString(number, 16);
             if (Dictionary.ContainsConvention(result))
                 return CreateConvention(number + 1);
             return result;

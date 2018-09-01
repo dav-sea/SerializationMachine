@@ -33,7 +33,7 @@ namespace SerializeMachine
                     if (TypeOf<Single>.Equals(type)) return new SingleResolver();
                     if (TypeOf<UInt16>.Equals(type)) return new UInt16Resolver();
                     if (TypeOf<UInt32>.Equals(type)) return new UInt32Resolver();
-                    if (TypeOf<UInt16>.Equals(type)) return new UInt16Resolver();
+                    if (TypeOf<UInt64>.Equals(type)) return new UInt64Resolver();
                 }
                 if (TypeOf<Decimal>.Equals(type)) return new DecimalResolver();
             }
@@ -51,6 +51,11 @@ namespace SerializeMachine
                 }
                 if (TypeOf<Object>.Equals(type))return new ObjectResolver();
                 if (TypeOf<String>.Equals(type))return new StringResolver();
+            }
+
+            if (TypeOf<System.Runtime.Serialization.ISerializable>.Type.IsAssignableFrom(type))
+            {
+                return new SerializableResolver(type, Serializator);
             }
 
             return new RuntimeResolver(type, Serializator);
