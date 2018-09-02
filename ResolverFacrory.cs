@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SerializeMachine.Core;
 using System.Reflection;
+using System.Runtime;
 using SerializeMachine.Resolvers;
 using SerializeMachine.Utility;
 using SerializeMachine.Resolvers.Primitives;
@@ -12,6 +13,7 @@ namespace SerializeMachine
     public sealed class ResolverFacrory
     {
         private readonly Serializator Serializator;
+        private readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
 
         public IResolver CreateResolver(string convention)
         {
@@ -51,6 +53,8 @@ namespace SerializeMachine
                 }
                 if (TypeOf<Object>.Equals(type))return new ObjectResolver();
                 if (TypeOf<String>.Equals(type))return new StringResolver();
+                if (RuntimeType.Equals(type)) return new TypeResolver(Serializator);
+                
             }
 
             if (TypeOf<System.Runtime.Serialization.ISerializable>.Type.IsAssignableFrom(type))

@@ -72,6 +72,7 @@
     <Compile Include="Resolvers\RuntimeResolver.cs" />
     <Compile Include="Resolvers\SerializableResolver.cs" />
     <Compile Include="Resolvers\SerializationInfoResolver.cs" />
+    <Compile Include="Resolvers\TypeResolver.cs" />
     <Compile Include="SerializedHeap.cs" />
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
