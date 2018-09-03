@@ -8,7 +8,7 @@ namespace SerializeMachine.Utility
 {
     public static class PackageUtility
     {
-        internal static void PackToInternal(XElement to, TypeDictionary dictionary, SerializedHeap heap)
+        internal static void PackToInternal(XElement to, TypeDictionary dictionary, Heap<XElement> heap)
         {
             to.Add(TypeDictionary.CreateSerializedTypeDictionary(dictionary.ToDictionary()));
             to.Add(SerializedHeap.CreateSerializedHeap(heap.ToDictionary()));
@@ -21,6 +21,10 @@ namespace SerializeMachine.Utility
         {
             return package.Element(SerializedHeap.XML_ELEMENTNAME_SERIALIZEDHEAP);
         }
-        
+
+        internal static XElement PackSerializedHeap(IHeap<XElement> heap)
+        {
+
+        }
     }
 }

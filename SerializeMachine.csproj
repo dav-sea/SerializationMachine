@@ -70,14 +70,13 @@
     <Compile Include="Resolvers\BuiltIn\Primitives\UInt32Resolver.cs" />
     <Compile Include="Resolvers\BuiltIn\Primitives\UInt64Resolver.cs" />
     <Compile Include="Resolvers\RuntimeResolver.cs" />
-    <Compile Include="Resolvers\SerializableResolver.cs" />
-    <Compile Include="Resolvers\SerializationInfoResolver.cs" />
-    <Compile Include="Resolvers\TypeResolver.cs" />
+    <Compile Include="Resolvers\.NET\SerializableResolver.cs" />
+    <Compile Include="Resolvers\.NET\SerializationInfoResolver.cs" />
+    <Compile Include="Resolvers\.NET\TypeResolver.cs" />
     <Compile Include="SerializedHeap.cs" />
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeDictionary.cs" />
-    <Compile Include="TypeManager.cs" />
     <Compile Include="Utility\AtributtesUtility.cs" />
     <Compile Include="Utility\Factory\FactoryUtility.cs" />
     <Compile Include="Utility\Factory\FactoryByCustomFunc.cs" />
@@ -86,6 +85,8 @@
     <Compile Include="Utility\Factory\FactoryByConstructor.cs" />
     <Compile Include="Utility\Factory\IFactory.cs" />
     <Compile Include="Utility\Factory\UninitializedObjectFactory.cs" />
+    <Compile Include="Utility\Heap.cs" />
+    <Compile Include="Utility\IHeap.cs" />
     <Compile Include="Utility\PackageUtility.cs" />
     <Compile Include="Utility\SerializationUtility.cs" />
     <Compile Include="Utility\TypeOf.cs" />

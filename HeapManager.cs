@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Xml.Linq;
 
+
+using SerializeMachine.Utility;
 using SerializeMachine.Core;
 
 namespace SerializeMachine
 {
     public sealed class HeapManager
     {
-        private readonly Heap OriginalHeap;
-        private readonly SerializedHeap SerializedHeap;
+        private readonly Heap<object> ManagedHeap;
+        private readonly Heap<XElement> SerializedHeap;
 
-        public Heap Original { get { return OriginalHeap; } }
-        public SerializedHeap Serialized {  get { return SerializedHeap;} }
+        public Heap<object> Managed { get { return ManagedHeap; } }
+        public Heap<XElement> Serialized { get { return SerializedHeap; } }
 
         public bool GetCreateGuid(object obj, out Guid guid)
         {
-            if (!OriginalHeap.TryGetGuid(obj, out guid))
+            if (!ManagedHeap.TryGetGuid(obj, out guid))
             {
                 guid = Guid.NewGuid();
-                Original.AddObject(obj, guid);
+                ManagedHeap.Add(guid , obj);
                 return true;
             }
             return false;
@@ -33,18 +34,18 @@ namespace SerializeMachine
         }
         public object GetObject(Guid guid)
         {
-            return OriginalHeap.ObjectOf(guid);
+            return ManagedHeap.ValueOf(guid);
         }
 
         public HeapManager(Serializator serializator)
         {
-            OriginalHeap = new Heap(50);
-            SerializedHeap = new SerializedHeap(OriginalHeap);
+            ManagedHeap = new Heap<object>(50);
+            SerializedHeap = new SerializedHeap(ManagedHeap);
         }
         public void FlashHeaps()
         {
-            SerializedHeap.ClearSerialized();
-            OriginalHeap.ClearHeap();
+            SerializedHeap.ClearHeap();
+            ManagedHeap.ClearHeap();
         }
     }
 }
