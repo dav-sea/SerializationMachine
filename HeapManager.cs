@@ -40,12 +40,12 @@ namespace SerializeMachine
         public HeapManager(Serializator serializator)
         {
             ManagedHeap = new Heap<object>(50);
-            SerializedHeap = new SerializedHeap(ManagedHeap);
+            SerializedHeap = new Heap<XElement>(50);
         }
         public void FlashHeaps()
         {
-            SerializedHeap.ClearHeap();
-            ManagedHeap.ClearHeap();
+            SerializedHeap.Clear();
+            ManagedHeap.Clear();
         }
     }
 }

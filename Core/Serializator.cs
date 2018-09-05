@@ -179,7 +179,7 @@ namespace SerializeMachine.Core
             if (HeapManager.GetCreateGuid(resolveObject, out finalGuid))
                 //Для объекта resolveObject уже создан Guid методом GetCreateGuid
                 //Поэтому теперь мы обновляем сериализированное состояние объекта и добавляем его в кучу сериализированных объектов
-                HeapManager.Serialized.Push(finalGuid, ResolveInternal(resolveObject, conventionType));
+                HeapManager.Serialized.ReplaceValue(finalGuid, ResolveInternal(resolveObject, conventionType));
 
             //В случае если объект resolveObject существует в куче, предпологается что он также 
             //существет и в куче сериализированных объектов.
@@ -196,16 +196,16 @@ namespace SerializeMachine.Core
                 finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serialized));
                 instance = resolver.ManagedObjectOf(serialized);
                 if (instance != null)
-                    HeapManager.Original.AddObject(instance, finalGuid);
+                    HeapManager.Managed.Add(finalGuid, instance);
                 DeresolveInternal(serialized, ref instance, resolver);
             }
             else
             {
                 finalGuid = new Guid(XMLUtility.GuidOfValueInternal(serialized));
-                instance = HeapManager.Original.ObjectOf(finalGuid);
+                instance = HeapManager.Managed.ValueOf(finalGuid);
                 if (instance == null)
                 {
-                    instance = AutoDeresolve(HeapManager.Serialized.GetSerialized(finalGuid)); ;
+                    instance = AutoDeresolve(HeapManager.Serialized.ValueOf(finalGuid)); ;
                 }
             }
 
