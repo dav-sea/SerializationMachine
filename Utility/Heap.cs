@@ -37,7 +37,7 @@ namespace SerializeMachine.Utility
         {
             var index = mList.IndexOfKey(guid);
             if (index < 0) mList.Add(guid, value);
-            mList.Values[index] = value;
+            mList[guid] = value;
         }
 
         public void Add(Guid guid, TValue value)
