@@ -13,7 +13,7 @@ namespace SerializeMachine
     public sealed class ResolverFacrory
     {
         private readonly Serializator Serializator;
-        private readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
+        private static readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
 
         public IResolver CreateResolver(string convention)
         {

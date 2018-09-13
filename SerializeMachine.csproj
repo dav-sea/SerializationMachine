@@ -91,6 +91,7 @@
     <Compile Include="Utility\SerializationUtility.cs" />
     <Compile Include="Utility\TypeOf.cs" />
     <Compile Include="Utility\XMLUtility.cs" />
+    <Compile Include="Core\Serializator.head.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
