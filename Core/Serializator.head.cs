@@ -36,12 +36,26 @@ namespace SerializeMachine.Core
         /// </summary>
         private ResolverBank ResolverBank;
 
+        public TypeManager GetTypeManager()
+        {
+            return TypeManager;
+        }
+        public HeapManager GetHeapManager()
+        {
+            return HeapManager;
+        }
+        public ResolverBank GetResolverBank()
+        {
+            return ResolverBank;
+        }
+
         public Serializator()
         {
             TypeManager = new TypeManager();
             ResolverBank = new global::SerializeMachine.ResolverBank(this);
             HeapManager = new HeapManager(this);
         }
+
         static Serializator()
         {
             GUID_NULL = Guid.Empty;

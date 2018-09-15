@@ -1,26 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core/Serializator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Resolvers/.NET/SerializableResolver.cs">
     <Files>
-      <File FileName="Core/Serializator.cs" Line="12" Column="9" />
-      <File FileName="ResolverFacrory.cs" Line="72" Column="6" NotebookId="1" />
-      <File FileName="Heap.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Utility/Heap.cs" Line="98" Column="21" NotebookId="1" />
-      <File FileName="HeapManager.cs" Line="14" Column="47" NotebookId="1" />
-      <File FileName="Utility/PackageUtility.cs" Line="40" Column="24" NotebookId="1" />
-      <File FileName="SerializedHeap.cs" Line="87" Column="1" NotebookId="1" />
-      <File FileName="Utility/IHeap.cs" Line="9" Column="6" NotebookId="1" />
-      <File FileName="SerializeMachine.cs" Line="76" Column="90" NotebookId="1" />
-      <File FileName="ResolverBank.cs" Line="31" Column="17" NotebookId="1" />
-      <File FileName="ResolverStorage.cs" Line="15" Column="17" NotebookId="1" />
-      <File FileName="IResolverStorage.cs" Line="8" Column="17" NotebookId="1" />
-      <File FileName="Core/Serializator.head.cs" Line="9" Column="61" NotebookId="1" />
+      <File FileName="Resolvers/.NET/TypeResolver.cs" Line="24" Column="29" />
+      <File FileName="SerializeMachine.cs" Line="70" Column="116" />
+      <File FileName="ResolverBank.cs" Line="33" Column="80" />
+      <File FileName="Resolvers/.NET/SerializableResolver.cs" Line="55" Column="65" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/sergey/SerializationMachine/SerializationMachine/Core/Serializator.cs" relfile="Core/Serializator.cs" line="182" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />

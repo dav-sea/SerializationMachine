@@ -30,7 +30,7 @@ namespace SerializeMachine
 
         internal ResolverBank(Serializator serializator)
         {
-            ResolverStorage = new ResolverStorage(serializator.TypeManager.Dictionary);
+            ResolverStorage = new ResolverStorage(serializator.GetTypeManager().Dictionary);
             ResolverFactory = new ResolverFacrory(serializator);
         }
 

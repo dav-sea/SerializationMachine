@@ -17,7 +17,7 @@ namespace SerializeMachine
 
         public IResolver CreateResolver(string convention)
         {
-            var type = Serializator.TypeManager.TypeOf(convention);
+            var type = Serializator.GetTypeManager().TypeOf(convention);
 
             //Нужно отловить все втроенные типы
             if (type.IsValueType)//Проверяем является ли тип значимым
