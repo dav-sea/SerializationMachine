@@ -14,12 +14,12 @@ namespace SerializeMachine
 
         void UpdateSerializeObject(object obj)
         {
-            UpdateSerializeObject(obj, Serializator.HeapManager.GetCreateGuid(obj));
+            UpdateSerializeObject(obj, Serializator.GetHeapManager().GetCreateGuid(obj));
         }
         void UpdateSerializeObject(object obj, Guid guid)
         {
             var serialized = Serializator.Resolve(obj);
-            Serializator.HeapManager.Serialized.ReplaceValue(guid, serialized);
+            Serializator.GetHeapManager().Serialized.ReplaceValue(guid, serialized);
         }
     }
 }

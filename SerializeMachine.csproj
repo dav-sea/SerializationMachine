@@ -89,6 +89,7 @@
     <Compile Include="Utility\SerializationUtility.cs" />
     <Compile Include="Utility\TypeOf.cs" />
     <Compile Include="Utility\XMLUtility.cs" />
+    <Compile Include="Core\Serializator.head.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

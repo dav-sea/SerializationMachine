@@ -14,12 +14,13 @@ namespace SerializeMachine
     public sealed class ResolverFacrory
     {
         private readonly Serializator Serializator;
-        private readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
+        private static readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
 
         public IResolver CreateResolver(string convention)
         {
-            var type = Serializator.TypeManager.TypeOf(convention);
             IResolver result;
+
+            var type = Serializator.GetTypeManager().TypeOf(convention);
 
             //Нужно отловить все втроенные типы
             if (type.IsValueType)//Проверяем является ли тип значимым

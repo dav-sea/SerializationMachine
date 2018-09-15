@@ -14,7 +14,7 @@ namespace SerializeMachine
         {
             Serializator = new Serializator();
 
-            var storage = Serializator.ResolverBank.Storage;
+            var storage = Serializator.GetResolverBank().Storage;
             
         }
 
@@ -26,8 +26,8 @@ namespace SerializeMachine
             
             var package = new XElement("SMPackage");
 
-            package.Add(new XAttribute("Root",Serializator.HeapManager.Managed.GuidOf(root).ToString()));
-            PackageUtility.PackToInternal(package, Serializator.TypeManager.Dictionary, Serializator.HeapManager.Serialized);
+            package.Add(new XAttribute("Root",Serializator.GetHeapManager().Managed.GuidOf(root).ToString()));
+            PackageUtility.PackToInternal(package, Serializator.GetTypeManager().Dictionary, Serializator.GetHeapManager().Serialized);
 
             return package;
         }
@@ -35,16 +35,16 @@ namespace SerializeMachine
         {
             Serializator.FlashHeaps();
 
-            Serializator.TypeManager.Dictionary.Clear();
-            Serializator.TypeManager.Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
+            Serializator.GetTypeManager().Dictionary.Clear();
+            Serializator.GetTypeManager().Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
             //Serializator.HeapManager.Serialized.LoadHeapSerialized(PackageUtility.GetSerializedHeap(package),true);
-            PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.HeapManager.Serialized);
+            PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.GetHeapManager().Serialized);
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
 
            
 
-            return Serializator.AutoDeresolve(Serializator.HeapManager.Serialized.ValueOf(rootGuid));
+            return Serializator.AutoDeresolve(Serializator.GetHeapManager().Serialized.ValueOf(rootGuid));
         }
     }
 

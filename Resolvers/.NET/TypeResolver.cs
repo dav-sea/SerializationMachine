@@ -21,7 +21,7 @@ namespace SerializeMachine.Resolvers
             string convention;
             var value = resolveObject as Type;
 
-            if(Serializator.TypeManager.Dictionary.TryGetConvention(value,out convention))
+            if(Serializator.GetTypeManager().Dictionary.TryGetConvention(value,out convention))
                 serialized.Value = "@" + convention;
             else
                 serialized.Value = value.AssemblyQualifiedName;
@@ -31,7 +31,7 @@ namespace SerializeMachine.Resolvers
         protected internal override object ManagedObjectOf(XElement serializedObject)
         {
             if (serializedObject.Value[0] == '@')
-                return Serializator.TypeManager.Dictionary.TypeOf(serializedObject.Value.Remove(0, 1));
+                return Serializator.GetTypeManager().Dictionary.TypeOf(serializedObject.Value.Remove(0, 1));
             else
                 return Type.GetType(serializedObject.Value);
         }

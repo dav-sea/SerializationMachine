@@ -5,6 +5,6 @@ namespace SerializeMachine
 {
     public interface IResolverStorage : IReadOnlyResolverStorage
     {
-        void AddResolver(IResolver resolver, string convention);
+        void SetResolver(IResolver resolver, string convention);
     }
 }

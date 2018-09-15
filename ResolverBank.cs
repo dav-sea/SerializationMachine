@@ -28,12 +28,16 @@ namespace SerializeMachine
             this.ResolverFactory = resolverFactory;
         }
 
-        public ResolverBank(Serializator serializator)
+        internal ResolverBank(Serializator serializator)
         {
-            ResolverStorage = new ResolverStorage(serializator.TypeManager.Dictionary);
+            ResolverStorage = new ResolverStorage(serializator.GetTypeManager().Dictionary);
             ResolverFactory = new ResolverFacrory(serializator);
         }
 
+        public void SetResolver(string convention,IResolver resolver)
+        {
+            ResolverStorage.SetResolver(resolver, convention);
+        }
         public ResolverFacrory Factory { get { return ResolverFactory; } }
         public ResolverStorage Storage { get { return ResolverStorage; } }
     }

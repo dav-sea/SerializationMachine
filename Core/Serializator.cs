@@ -7,23 +7,8 @@ using SerializeMachine.Managers;
 
 namespace SerializeMachine.Core
 {
-    public sealed class Serializator
+    public  sealed partial class Serializator
     {
-        /// <summary>
-        /// NULL-Метка для сериализатора.
-        /// </summary>
-        internal const string XML_ELEMENTNAME_NULL = "NULL";
-        /// <summary>
-        /// Имя атрибута, в котором хранится GUID объекта
-        /// </summary>
-        internal const string XML_ATTRIBUTENAME_GUID = "GUID";
-        internal static readonly Guid GUID_NULL = Guid.Empty;
-        internal static readonly string GUID_NULL_TOSTRING = GUID_NULL.ToString();
-
-        public HeapManager HeapManager;
-        public TypeManager TypeManager;
-        public ResolverBank ResolverBank;
-
         /// <summary>
         /// Отчищает все кучи. 
         /// Вызывает HeapManager.FlashHeaps();
@@ -32,59 +17,6 @@ namespace SerializeMachine.Core
         {
             HeapManager.FlashHeaps();
         }
-
-        /*
-                /// <summary>
-                /// Десериализирует сериализированную версию объекта serializedObject в возвращаемый управляемый объект, используя 
-                /// действительный сериализатор для типа этого объекта. 
-                /// Допускается что сериализированная версия объекта будет соответствовать* значению NULL, в данном случае будет возвращен null.
-                /// 
-                /// Метод является контекстным:
-                /// -Обрашается к менеджеру типов для определения типа по условному обозноечению типа
-                /// 
-                /// *xml-узел должен иметь вид <NULL />. Значение NULL для самого узла serializedObject недопустимо
-                /// </summary>
-                /// <param name="serializedObject">Сериализированная версия объекта</param>
-                /// <returns>Управляемый объект построенный по serializedObject</returns>
-                public object IsolatedDeresolve(XElement serializedObject)
-                {
-                    //Проверка на NULL
-                    if (XMLUtility.IsNullOf(serializedObject))
-                        return null;
-                    else
-                    {
-                        //Получаем resolver по convention
-                        var resolver = ResolverBank.GetResolver(serializedObject.Name.LocalName);
-                        //Создаем экземпляр
-                        var instance = resolver.ManagedObjectOf(serializedObject);
-                        DeresolveInternal(serializedObject, ref instance, resolver);
-                        return instance;
-                    }
-            
-
-                }
-                /// <summary>
-                /// Сериализирует объект resolveObject в возвращаемый xml-узел, используя действительный сериализатор для типа объекта resolveObject. 
-                /// Допускается значение null для resolveObject, в данном случае будет возвращен пустой xml-узел с именем соответствующему имени нулевого объекта. 
-                /// 
-                /// Метод является контекстным: 
-                /// -Обрашается к менеджеру типов для определения условного обозноечения типа.
-                /// </summary>
-                /// <param name="resolveObject">Сериализируемый объект</param>
-                /// <returns>xml-узел являющейся результатом сериализации</returns>
-                public XElement IsolatedResolve(object resolveObject)
-                {
-                    if (resolveObject == null)
-                        return TypeDictionary.GetNullHead();
-                    else
-                    {
-                        var conventionType = TypeManager.ConventionOf(resolveObject.GetType());
-                        var serialized = TypeDictionary.GetHead(conventionType);
-                        ResolveToInternal(resolveObject, conventionType, serialized);
-                        return serialized;
-                    }
-                }
-         */
 
         /// <summary>
         /// Сериализирует resolveObject в target.
@@ -295,11 +227,6 @@ namespace SerializeMachine.Core
             resolver.Deserialzie(serializedObject, ref instance);
         }
 
-        public Serializator()
-        {
-            TypeManager = new TypeManager();
-            ResolverBank = new global::SerializeMachine.ResolverBank(this);
-            HeapManager = new HeapManager(this);
-        }
+
     }
 }
