@@ -7,11 +7,8 @@ namespace SerializeMachine.Managers
 {
     public sealed class TypeManager : Core.ITypeManager
     {
-        public TypeDictionary Dictionary
-        {
-            private set;
-            get;
-        }
+        public TypeDictionary Dictionary { private set; get; }
+        public TypeDictionary InvalidTypeDictionary { private set; get; }
 
         public Type TypeOf(string convention)
         {
@@ -26,8 +23,18 @@ namespace SerializeMachine.Managers
             string convention;
             if (!Dictionary.TryGetConvention(type, out convention))
             {
-                convention = CreateConvention(Dictionary.Count);
+                convention = GetNewValidConvention(type);
                 Dictionary.AddConvention(type, convention);
+            }
+            return convention;
+        }
+
+        private string GetNewValidConvention(Type type)
+        {
+            string convention;
+            if (!InvalidTypeDictionary.TryGetConvention(type, out convention))
+            {
+                convention = CreateConvention(Dictionary.Count);
             }
             return convention;
         }
@@ -43,9 +50,12 @@ namespace SerializeMachine.Managers
         public TypeManager(TypeDictionary dictionary)
         {
             this.Dictionary = dictionary;
+            InvalidTypeDictionary = new TypeDictionary(10);
         }
         internal TypeManager()
-            : this(new TypeDictionary(50)) { }
-
+            : this(new TypeDictionary(20))
+        {
+    
+        }
     }
 }

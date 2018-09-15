@@ -7,6 +7,7 @@ using SerializeMachine.Resolvers;
 using SerializeMachine.Utility;
 using SerializeMachine.Resolvers.Primitives;
 using SerializeMachine.Resolvers.BuiltIn;
+using SerializeMachine.Utility.Factory.Generic;
 
 namespace SerializeMachine
 {
@@ -18,43 +19,25 @@ namespace SerializeMachine
         public IResolver CreateResolver(string convention)
         {
             var type = Serializator.TypeManager.TypeOf(convention);
+            IResolver result;
 
             //Нужно отловить все втроенные типы
             if (type.IsValueType)//Проверяем является ли тип значимым
             {
-                if (type.IsPrimitive)//Проверяем является ли тип примитивным
+                if (type.IsPrimitive )//Проверяем является ли тип примитивным
                 {
-                    if (TypeOf<Boolean>.Equals(type)) return new BooleanResolver();
-                    if (TypeOf<Byte>.Equals(type)) return new ByteResolver();
-                    if (TypeOf<Char>.Equals(type)) return new CharResolver();
-                    if (TypeOf<Double>.Equals(type)) return new DoubleResolver();
-                    if (TypeOf<Int16>.Equals(type)) return new Int16Resolver();
-                    if (TypeOf<Int32>.Equals(type)) return new Int32Resolver();
-                    if (TypeOf<Int64>.Equals(type)) return new Int64Resolver();
-                    if (TypeOf<SByte>.Equals(type)) return new SByteResolver();
-                    if (TypeOf<Single>.Equals(type)) return new SingleResolver();
-                    if (TypeOf<UInt16>.Equals(type)) return new UInt16Resolver();
-                    if (TypeOf<UInt32>.Equals(type)) return new UInt32Resolver();
-                    if (TypeOf<UInt64>.Equals(type)) return new UInt64Resolver();
+                    if(TryCreatePrimitiveResolver(type,out result)) return result;
                 }
                 if (TypeOf<Decimal>.Equals(type)) return new DecimalResolver();
             }
             else
             {
                 if (type.IsArray)
-                {
-                    //var elementType = type.GetGenericArguments()[0];
-                    var rank = type.GetArrayRank();
-                    if (rank == 1)
-                    {
-                        return new SimpleArrayResolver(type, Serializator);
-                    }
-                    else throw new InvalidOperationException();
-                }
-                if (TypeOf<Object>.Equals(type))return new ObjectResolver();
-                if (TypeOf<String>.Equals(type))return new StringResolver();
+                    return CreateArrayResolver(type);
+
+                if (TypeOf<Object>.Equals(type)) return new ObjectResolver();
+                if (TypeOf<String>.Equals(type)) return new StringResolver();
                 if (RuntimeType.Equals(type)) return new TypeResolver(Serializator);
-                
             }
 
             if (TypeOf<System.Runtime.Serialization.ISerializable>.Type.IsAssignableFrom(type))
@@ -65,9 +48,38 @@ namespace SerializeMachine
             return RuntimeResolver.ConfigurateRuntimeResolver(type, Serializator);
         }
 
+        private bool TryCreatePrimitiveResolver(Type type, out IResolver resolver)
+        {
+            if (TypeOf<Boolean>.Equals(type)) { resolver = new BooleanResolver(); return true; }
+            if (TypeOf<Byte>.Equals(type)) { resolver = new ByteResolver(); return true; }
+            if (TypeOf<Char>.Equals(type)) { resolver = new CharResolver(); return true; }
+            if (TypeOf<Double>.Equals(type)) { resolver = new DoubleResolver(); return true; }
+            if (TypeOf<Int16>.Equals(type)) { resolver = new Int16Resolver(); return true; }
+            if (TypeOf<Int32>.Equals(type)) { resolver = new Int32Resolver(); return true; }
+            if (TypeOf<Int64>.Equals(type)) { resolver = new Int64Resolver(); return true; }
+            if (TypeOf<SByte>.Equals(type)) { resolver = new SByteResolver(); return true; }
+            if (TypeOf<Single>.Equals(type)) { resolver = new SingleResolver(); return true; }
+            if (TypeOf<UInt16>.Equals(type)) { resolver = new UInt16Resolver(); return true; }
+            if (TypeOf<UInt32>.Equals(type)) { resolver = new UInt32Resolver(); return true; }
+            if (TypeOf<UInt64>.Equals(type)) { resolver = new UInt64Resolver(); return true; }
+            resolver = null;
+            return false;
+        }
+        private IResolver CreateArrayResolver(Type type)
+        {
+            var rank = type.GetArrayRank();
+            if (rank == 1)
+            {
+                return new SimpleArrayResolver(type, Serializator);
+            }
+            else throw new InvalidOperationException();
+        }
+        
+
         public ResolverFacrory(Serializator serializator)
         {
             this.Serializator = serializator;
         }
+        
     }
 }

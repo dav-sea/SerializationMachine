@@ -13,9 +13,6 @@ namespace SerializeMachine.Utility
         void Add(Guid guid, TValue value);
         bool Remove(Guid guid);
 
-        //bool ContainsGuid(Guid guid);
-        //bool ContainValue(TValue value);
-
         int GetHeapSize();
         void SetHeapSize(int size);
     }

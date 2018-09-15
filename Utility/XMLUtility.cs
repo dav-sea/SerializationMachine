@@ -16,6 +16,10 @@ namespace SerializeMachine.Utility
         {
             node.SetAttributeValue(Serializator.XML_ATTRIBUTENAME_GUID, guid);
         }
+        public static XElement CreateNode(string convention)
+        {
+            return new XElement(convention);
+        }
 
         
         public static Guid GuidOfAttribute(XElement node)

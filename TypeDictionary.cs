@@ -9,7 +9,6 @@ namespace SerializeMachine
     public sealed class TypeDictionary
     {
         public const string XML_ELEMENTNAME_TYPEDICTIONARY = "DICTIONARY";
-        public static readonly string CONVENTION_NULL = "NULL";
 
         private readonly SortedList<string, Type> TypeList;
 
@@ -31,7 +30,7 @@ namespace SerializeMachine
         public string ConventionOf(Type type)
         {
             var index = TypeList.IndexOfValue(type);
-            return index < 0 ? CONVENTION_NULL : TypeList.Keys[index];
+            return index < 0 ? Serializator.GUID_NULL_TOSTRING : TypeList.Keys[index];
         }
         public Type TypeOf(string convention)
         {
@@ -43,7 +42,7 @@ namespace SerializeMachine
             var index = TypeList.IndexOfValue(type);
             if (index < 0)
             {
-                convention = CONVENTION_NULL;
+                convention = Serializator.GUID_NULL_TOSTRING;
                 return false;
             }
             convention = TypeList.Keys[index];
@@ -105,20 +104,6 @@ namespace SerializeMachine
         public void Clear()
         {
             TypeList.Clear();
-        }
-
-        public static XElement GetHead(string convention)
-        {
-            return new XElement(convention);
-        }
-        public static void SetNullSerialized(XElement element)
-        {
-            element.Value = null;
-            element.Name = CONVENTION_NULL;
-        }
-        public static XElement GetNullHead()
-        {
-            return new XElement(CONVENTION_NULL);
         }
 
         public IDictionary<string,Type> ToDictionary()

@@ -241,24 +241,32 @@ namespace SerializeMachine.Core
         internal XElement ResolveInternal(object resolveObject, string convention, IResolver resolver)
         {
             if (resolveObject == null)
-                return TypeDictionary.GetNullHead();
-            else
-            {
-                var serialized = TypeDictionary.GetHead(convention);
-                ResolveToInternal(resolveObject, resolver, serialized);
-                return serialized;
-            }
+                return XMLUtility.CreateNullNode();
+
+            var serialized = XMLUtility.CreateNode(convention);
+            ResolveToInternal(resolveObject, resolver, serialized);
+            return serialized;
+
         }
         internal XElement ResolveInternal(object resolveObject, string convention)
         {
             if (resolveObject == null)
-                return TypeDictionary.GetNullHead();
-            else
-            {
-                var serialized = TypeDictionary.GetHead(convention);
-                ResolveToInternal(resolveObject, convention, serialized);
-                return serialized;
-            }
+                return XMLUtility.CreateNullNode();
+
+            var serialized = XMLUtility.CreateNode(convention);
+            ResolveToInternal(resolveObject, convention, serialized);
+            return serialized;
+
+        }
+        internal XElement Resolve(object resolveObject)
+        {
+            if (resolveObject == null)
+                return XMLUtility.CreateNullNode();
+
+            var convention = TypeManager.ConventionOf(resolveObject.GetType());
+            var serialized = XMLUtility.CreateNode(convention);
+            ResolveToInternal(resolveObject, convention, serialized);
+            return serialized;
         }
         /// <summary>
         /// Десериализирует xml-узел serializedObject в возвращаймый объект, используя действительный сериализатор для типа объекта serializedObject.
