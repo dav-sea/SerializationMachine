@@ -47,9 +47,12 @@ Here is what is in the **serialized**:
 
 **serialized** consists of the nodes <DICTIONARY> and <HEAP>.
 
-The <DICTIONARY > stores all data to work with the type.
-The name of each node located in <DICTIONARY> is a type symbol (**convention**), and as a value of such
+>The ```<DICTIONARY >``` stores all data to work with the type.
+The name of each node located in ```<DICTIONARY>``` is a type symbol (**convention**), and as a value of such
 the node uses a string representation of the type obtained from *AssemblyQualifiedName*.
 
-in <HEAP> stored the serialized version of the object, each node located in the <HEAP> must have a GUID attribute 
-with a unique 128 bit value in the form of *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx* each digit is a hexadecimal value
+>In <HEAP> stored the serialized version of the object, each node located in the <HEAP> must have a GUID attribute 
+with a unique 128 bit value in the form of *xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx* each digit is a hexadecimal value.
+
+>For this example, the ```<_0 SIZE="5" GUID="98be5d59-563b-4328-899c-9e1a26bc973c" >``` node header contains another attribute
+```SIZE```. This attribute is exhibited and read by ArrayResolver
