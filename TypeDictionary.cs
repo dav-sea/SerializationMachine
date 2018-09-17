@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using SerializeMachine.Utility;
 
 using SerializeMachine.Core;
 
@@ -57,20 +58,79 @@ namespace SerializeMachine
         {
             return TypeList.ContainsKey(convention);
         }
+        public bool ContainsType(Type type)
+        {
+            return TypeList.ContainsValue(type);
+        }
 
+        /// <summary>
+        /// Устанавливает convention для указанного типа. Если указанный convention
+        /// уже определен то он будет перегружен новым
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <param name="convention">Convention</param>
+        public void SetConvention(Type type,string convention)
+        {
+            if (type == null) throw new ArgumentNullException();
+            if (string.Empty.Equals(convention)) throw new ArgumentException();
+
+            var index = TypeList.IndexOfKey(convention);
+            if (index < 0)
+                TypeList.Add(convention, type);
+            else
+                TypeList.Values[index] = type;
+        }
+        /// <summary>
+        /// Устанавливает convention для указанного типа. Если указанный convention
+        /// уже определен то он будет перегружен новым. Нет проверки входных параметров.
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <param name="convention">Convention</param>
+        public void SetConventionInternal(Type type, string convention)
+        {
+            var index = TypeList.IndexOfKey(convention);
+            if (index < 0)
+                TypeList.Add(convention, type);
+            else
+                TypeList.Values[index] = type;
+        }
+        /// <summary>
+        /// Устанавливает Convention для указанного типа. Нет проверки входных параметров.
+        /// Нет проверки на колизию условных обозночений 
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <param name="convention">Convention</param>
+        internal void AddConventionInternal(Type type, string convention)
+        {
+            TypeList.Add(convention, type);
+        }
+        /// <summary>
+        /// Удаляет указаный convention из словаря
+        /// </summary>
+        /// <param name="convention">Convention.</param>
+        public void DeleteConvention(string convention)
+        {
+            TypeList.Remove(convention);
+        }
+
+        public void Reserve(int reserveCapacity)
+        {
+            TypeList.Capacity += reserveCapacity;
+        }
+
+        [Obsolete("Use SetConvention")]
         public void OverloadConvention(Type type, string convention)
         {
             DeleteAllConventionOf(type);
             AddConvention(type, convention);
         }
+        [Obsolete("Use SetConvention")]
         public void AddConvention(Type type, string convention)
         {
             TypeList.Add(convention, type);
         }
-        public void DeleteConvention(string convention)
-        {
-            TypeList.Remove(convention);
-        }
+
+        [Obsolete("Dont use this method")]
         public void DeleteAllConventionOf(Type type)
         {
             int index = TypeList.IndexOfValue(type);
@@ -85,20 +145,22 @@ namespace SerializeMachine
         {
             TypeList = new SortedList<string, Type>(dictionaryCapacity);
         }
+        [Obsolete("use static method LoadTypesInternal")]
         internal TypeDictionary(XElement serialized)
         {
             TypeList = new SortedList<string, Type>(50);//TODO CAPCACITY
             //if (serialized == null) throw new ArgumentNullException("serialized");//TODO REMOVE? (internal)
-            LoadTypesInternal(serialized, TypeList);
+            LoadTypes(this, serialized);
         }
 
+        [Obsolete("Use static method LoadTypes(TypeDictionary,XElement)")]
         public void OverloadTypes(XElement serialized)
         {
             if (serialized == null || serialized.Name != XML_ELEMENTNAME_TYPEDICTIONARY) return;
             
             TypeList.Clear();
 
-            LoadTypesInternal(serialized, TypeList);
+            LoadTypes(this, serialized);
         }
 
         public void Clear()
@@ -106,48 +168,60 @@ namespace SerializeMachine
             TypeList.Clear();
         }
 
+        [Obsolete("Dont use this method. TypeDictionary is IDictionary<string,Type>")]
         public IDictionary<string,Type> ToDictionary()
         {
-            return TypeList;
-        }
-        
-        public static XElement CreateSerializedTypeDictionary(TypeDictionary typeDictionary)
-        {
-            if (typeDictionary == null) throw new ArgumentNullException("typeDictionary");
-            var target = typeDictionary.ToDictionary();
-            if(target == null) throw new InvalidOperationException("typeDictionary method ToDictionary() return null");
-            return CreateSerializedTypeDictionary(target);
-        }
-        internal static XElement CreateSerializedTypeDictionary(IDictionary<string, Type> typeDictionary)
-        {
-            var serialized = new XElement(XML_ELEMENTNAME_TYPEDICTIONARY);
+            var count = Count;
+            var result = new Dictionary<string, Type>(count);
+            var dictionaryEnumerator = TypeList.GetEnumerator();
 
-            foreach(var pair in typeDictionary)
-                serialized.Add(
-                    new XElement(
-                        pair.Key,pair.Value.AssemblyQualifiedName.ToString()
-                        )
-                );
+            while(dictionaryEnumerator.MoveNext())
+                result.Add(dictionaryEnumerator.Current.Key, dictionaryEnumerator.Current.Value);
 
-            return serialized;
+            return result;
         }
-        internal static void LoadTypesInternal(XElement serialized,IDictionary<string,Type> here)
+
+        public static XElement ToXML(TypeDictionary dictionary)
         {
-            foreach (var element in serialized.Elements())
-                here.Add(element.Name.LocalName, Type.GetType(element.Value));
+            if (dictionary == null) throw new ArgumentNullException();
+
+            var node = new XElement(XML_ELEMENTNAME_TYPEDICTIONARY);
+            var dictionaryEnumerator = dictionary.TypeList.GetEnumerator();
+
+            while(dictionaryEnumerator.MoveNext())
+            {
+                node.Add(new XElement(dictionaryEnumerator.Current.Key, dictionaryEnumerator.Current.Value));
+            }
+
+            return node;
         }
-        public static TypeDictionary CreateNewTypeDictionary(XElement serialized)
+        public static void LoadTypes(TypeDictionary dictionary, XElement dictionaryNode)
         {
-            return serialized == null ? new TypeDictionary(0) : new TypeDictionary(serialized);
+            if (dictionaryNode == null || dictionary == null) return;
+            if (!IsTypeDictionaryNode(dictionaryNode)) throw new FormatException();
+            //TODO dictionary.Reserve(dictionaryNode.elemennscount)
+            LoadTypesInternal(dictionary, dictionaryNode.Elements());
+        }
+        internal static void LoadTypesInternal(TypeDictionary dictionary, IEnumerable<XElement> typeNodes)
+        {
+            var nodeEnumerator = typeNodes.GetEnumerator();
+
+            Type tempType;
+
+            while(nodeEnumerator.MoveNext())
+            {
+                tempType = Type.GetType(nodeEnumerator.Current.Value);
+                if(tempType == null)
+                {
+                    //TODO реагировать в зависимости от выбранных настроек загрузки словаря 
+                    continue;
+                }
+                dictionary.SetConventionInternal(tempType, nodeEnumerator.Current.Name.LocalName);
+            }
+        }
+        private static bool IsTypeDictionaryNode(XElement node)
+        {
+            return node.Name == XML_ELEMENTNAME_TYPEDICTIONARY;
         }
     }
-
-
 }
-//TODO MB
-/*
- * internal static class TypeOf<T> 
- * {
- *     public static readonly Type Runtime = typeof(T);
- * }
- */
