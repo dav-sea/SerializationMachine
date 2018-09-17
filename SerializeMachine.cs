@@ -37,14 +37,15 @@ namespace SerializeMachine
 
             Serializator.GetTypeManager().Dictionary.Clear();
             Serializator.GetTypeManager().Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
-            //Serializator.HeapManager.Serialized.LoadHeapSerialized(PackageUtility.GetSerializedHeap(package),true);
+
             PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.GetHeapManager().Serialized);
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
-
-           
-
             return Serializator.AutoDeresolve(Serializator.GetHeapManager().Serialized.ValueOf(rootGuid));
+        }
+        public void ReserveConvention(Type type,string convention)
+        {
+            Serializator.GetTypeManager().InvalidTypeDictionary.OverloadConvention(type, convention);
         }
     }
 

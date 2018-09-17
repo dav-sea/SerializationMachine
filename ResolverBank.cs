@@ -17,7 +17,7 @@ namespace SerializeMachine
             if (result == null)
             {
                 result = ResolverFactory.CreateResolver(convention);
-                    ResolverStorage.AddResolver(result, convention);
+                ResolverStorage.SetResolver(result, convention);
             }
             return result;
         }
@@ -28,7 +28,7 @@ namespace SerializeMachine
             this.ResolverFactory = resolverFactory;
         }
 
-        internal ResolverBank(Serializator serializator)
+        public ResolverBank(Serializator serializator)
         {
             ResolverStorage = new ResolverStorage(serializator.GetTypeManager().Dictionary);
             ResolverFactory = new ResolverFacrory(serializator);

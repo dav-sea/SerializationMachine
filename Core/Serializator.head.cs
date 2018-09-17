@@ -34,7 +34,7 @@ namespace SerializeMachine.Core
         /// <summary>
         /// Менеджер resolver`ов
         /// </summary>
-        private ResolverBank ResolverBank;
+        private ResolverBank ResolversManager;
 
         public TypeManager GetTypeManager()
         {
@@ -46,14 +46,22 @@ namespace SerializeMachine.Core
         }
         public ResolverBank GetResolverBank()
         {
-            return ResolverBank;
+            return ResolversManager;
         }
 
         public Serializator()
+            :this(new TypeManager(),new HeapManager())
         {
             TypeManager = new TypeManager();
-            ResolverBank = new global::SerializeMachine.ResolverBank(this);
-            HeapManager = new HeapManager(this);
+            ResolversManager = new ResolverBank(this);
+            HeapManager = new HeapManager();
+        }
+
+        public Serializator(TypeManager typeManager,HeapManager heapManager)
+        {
+            TypeManager = typeManager;
+            HeapManager = heapManager;
+            ResolversManager = new ResolverBank(this);
         }
 
         static Serializator()
@@ -61,5 +69,6 @@ namespace SerializeMachine.Core
             GUID_NULL = Guid.Empty;
             GUID_NULL_TOSTRING = GUID_NULL.ToString();
         }
+
     }
 }

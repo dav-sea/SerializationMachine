@@ -37,7 +37,7 @@ namespace SerializeMachine
             return ManagedHeap.ValueOf(guid);
         }
 
-        public HeapManager(Serializator serializator)
+        public HeapManager()
         {
             ManagedHeap = new Heap<object>(50);
             SerializedHeap = new Heap<XElement>(50);
