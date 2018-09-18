@@ -24,11 +24,10 @@ namespace SerializeMachine.Managers
             if (!Dictionary.TryGetConvention(type, out convention))
             {
                 convention = GetNewValidConvention(type);
-                Dictionary.AddConvention(type, convention);
+                Dictionary.AddConventionInternal(type, convention);
             }
             return convention;
         }
-
         private string GetNewValidConvention(Type type)
         {
             string convention;
@@ -38,13 +37,20 @@ namespace SerializeMachine.Managers
             }
             return convention;
         }
-
         private string CreateConvention(int number)
         {
             var result = "_" + Convert.ToString(number, 16);
             if (Dictionary.ContainsConvention(result))
                 return CreateConvention(number + 1);
             return result;
+        }
+
+        public void ReserveConvention(Type type,string convention)
+        {
+            if (type == null) throw new ArgumentNullException();
+            if (string.Empty.Equals(convention)) throw new ArgumentException();
+
+            InvalidTypeDictionary.SetConventionInternal(type, convention);
         }
 
         public TypeManager(TypeDictionary dictionary)

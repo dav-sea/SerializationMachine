@@ -52,7 +52,7 @@ namespace SerializeMachine.Resolvers
             InstanceFactory = FactoryUtility.CreateUninitializedFactory(resolveType);
             Constructor = resolveType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, ConstructorSignature, null);
             
-            var resolverStorage = Serializator.GetResolverBank().Storage;
+            var resolverStorage = Serializator.GetResolverManager().Storage;
             var serializationInfoConvention = Serializator.GetTypeManager().ConventionOf(typeof(SerializationInfo));
             resolverStorage.SetResolver(new SerializationInfoResolver(serializator), serializationInfoConvention);
         }

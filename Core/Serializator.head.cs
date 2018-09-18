@@ -44,7 +44,7 @@ namespace SerializeMachine.Core
         {
             return HeapManager;
         }
-        public ResolverBank GetResolverBank()
+        public ResolverBank GetResolverManager()
         {
             return ResolversManager;
         }

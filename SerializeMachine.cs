@@ -14,7 +14,7 @@ namespace SerializeMachine
         {
             Serializator = new Serializator();
 
-            var storage = Serializator.GetResolverBank().Storage;
+            var storage = Serializator.GetResolverManager().Storage;
             
         }
 
@@ -35,9 +35,9 @@ namespace SerializeMachine
         {
             Serializator.FlashHeaps();
 
-            Serializator.GetTypeManager().Dictionary.Clear();
-            Serializator.GetTypeManager().Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
-
+            //Serializator.GetTypeManager().Dictionary.Clear();
+            //Serializator.GetTypeManager().Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
+            TypeDictionary.LoadTypes(Serializator.GetTypeManager().Dictionary, PackageUtility.GetTypeDictionaryInternal(package));
             PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.GetHeapManager().Serialized);
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
@@ -45,7 +45,8 @@ namespace SerializeMachine
         }
         public void ReserveConvention(Type type,string convention)
         {
-            Serializator.GetTypeManager().InvalidTypeDictionary.OverloadConvention(type, convention);
+            //Serializator.GetTypeManager().InvalidTypeDictionary.OverloadConvention(type, convention);
+            Serializator.GetTypeManager().ReserveConvention(type, convention);
         }
     }
 

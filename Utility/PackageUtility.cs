@@ -14,7 +14,7 @@ namespace SerializeMachine.Utility
 
         internal static void PackToInternal(XElement to, TypeDictionary dictionary, Heap<XElement> heap)
         {
-            to.Add(TypeDictionary.CreateSerializedTypeDictionary(dictionary.ToDictionary()));
+            to.Add(TypeDictionary.ToXML(dictionary));
             to.Add(PackSerializedHeapInternal(heap));
         }
         internal static XElement GetTypeDictionaryInternal(XElement package)

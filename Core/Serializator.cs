@@ -32,7 +32,7 @@ namespace SerializeMachine.Core
             //Вызов внутреннего метода 
             ResolveToInternal(
                 resolveObject,
-                ResolverBank.GetResolver(TypeManager.ConventionOf(resolveObject.GetType())),
+                ResolversManager.GetResolver(TypeManager.ConventionOf(resolveObject.GetType())),
                 target
             );
         }
@@ -51,7 +51,7 @@ namespace SerializeMachine.Core
             DeresolveInternal(
                 serializedObject,
                 ref target,
-                ResolverBank.GetResolver(TypeManager.ConventionOf(target.GetType()))
+                ResolversManager.GetResolver(TypeManager.ConventionOf(target.GetType()))
             );
         }
 
@@ -89,7 +89,7 @@ namespace SerializeMachine.Core
 
             var conventionType = serializedObject.Name.LocalName;
             var type = TypeManager.TypeOf(conventionType);
-            var resolver = ResolverBank.GetResolver(conventionType);
+            var resolver = ResolversManager.GetResolver(conventionType);
 
             if (SerializationUtility.Targeting.IsSaveReferenceInternal(type))
             {
@@ -168,7 +168,7 @@ namespace SerializeMachine.Core
         /// <param name="serializeHere">xml-узел в который будет записан результат сериализации</param>
         internal void ResolveToInternal(object resolveObject, string conventionType, XElement serializeHere)
         {
-            ResolverBank.GetResolver(conventionType).Serialize(serializeHere, resolveObject);
+            ResolversManager.GetResolver(conventionType).Serialize(serializeHere, resolveObject);
         }
         internal XElement ResolveInternal(object resolveObject, string convention, IResolver resolver)
         {
@@ -211,7 +211,7 @@ namespace SerializeMachine.Core
         /// <returns>Результат десериализации</returns>
         internal void DeresolveInternal(XElement serializedObject, ref object instance, string convention)
         {
-            ResolverBank.GetResolver(convention).Deserialzie(serializedObject, ref instance);
+            ResolversManager.GetResolver(convention).Deserialzie(serializedObject, ref instance);
         }
         /// <summary>
         /// Десериализирует xml-узел serializedObject в возвращаймый объект, используя указанный resolver.
