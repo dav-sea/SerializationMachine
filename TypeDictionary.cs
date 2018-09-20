@@ -190,7 +190,7 @@ namespace SerializationMachine
 
             while(dictionaryEnumerator.MoveNext())
             {
-                node.Add(new XElement(dictionaryEnumerator.Current.Key, dictionaryEnumerator.Current.Value));
+                node.Add(new XElement(dictionaryEnumerator.Current.Key, dictionaryEnumerator.Current.Value.AssemblyQualifiedName));
             }
 
             return node;

@@ -8,12 +8,23 @@ namespace Testing
         public static void Main(string[] args)
         {
             var machine = new SerializeMachine();
-            int? data = null;
+            var data = new testmain();
             var serialized = machine.Serialize(data);
 
             var deserialized = machine.Deserialize(serialized);
-            Console.WriteLine(deserialized == null);
+            Console.WriteLine(deserialized);
 
         }
+    }
+
+    [Serializable]
+    class test 
+    {
+        int asd = 21;
+    }
+    [Serializable]
+    class testmain : test
+    {
+        int dsa = 12;
     }
 }
