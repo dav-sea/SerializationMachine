@@ -35,6 +35,7 @@ namespace SerializationMachine.Core
         /// Менеджер resolver`ов
         /// </summary>
         private ResolverBank ResolversManager;
+        //private 
 
         public TypeManager GetTypeManager()
         {

@@ -39,7 +39,7 @@ namespace SerializationMachine.Managers
         }
         private string CreateConvention(int number)
         {
-            var result = "_" + Convert.ToString(number, 16);
+            var result = "_" + Convert.ToString(number,16);
             if (UsingDictionary.ContainsConvention(result))
                 return CreateConvention(number + 1);
             return result;

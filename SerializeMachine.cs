@@ -22,7 +22,8 @@ namespace SerializationMachine
         {
             Serializator.FlashHeaps();
 
-            Serializator.AutoResolve(root);
+            //Serializator.AutoResolve(root);
+            Serializator.HeapResolve(root);
             
             var package = new XElement("SMPackage");
 
@@ -39,7 +40,7 @@ namespace SerializationMachine
             PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.GetHeapManager().Serialized);
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
-            return Serializator.AutoDeresolve(Serializator.GetHeapManager().Serialized.ValueOf(rootGuid));
+            return Serializator.HeapDeresolve(Serializator.GetHeapManager().Serialized.ValueOf(rootGuid));
         }
         public void ReserveConvention(Type type,string convention)
         {

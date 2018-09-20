@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationMachine", "SerializationMachine.csproj", "{F51917D2-5F00-41B3-B000-7C5CECD0EA08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{AD67F43D-9C33-425F-8AA6-E84A9E620761}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{F51917D2-5F00-41B3-B000-7C5CECD0EA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51917D2-5F00-41B3-B000-7C5CECD0EA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51917D2-5F00-41B3-B000-7C5CECD0EA08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD67F43D-9C33-425F-8AA6-E84A9E620761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD67F43D-9C33-425F-8AA6-E84A9E620761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD67F43D-9C33-425F-8AA6-E84A9E620761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD67F43D-9C33-425F-8AA6-E84A9E620761}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

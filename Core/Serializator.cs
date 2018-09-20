@@ -118,6 +118,7 @@ namespace SerializationMachine.Core
             //В конечном счете, в итоговой xml-узел, в качестве значения, будет помещен guid указывающий на объект resolveObject
             return XMLUtility.CreateReferenceNode(conventionType, finalGuid.ToString());
         }
+
         internal object HeapDeresolve(XElement serialized, IResolver resolver)
         {
             object instance;
@@ -142,6 +143,19 @@ namespace SerializationMachine.Core
             }
 
             return instance;
+        }
+
+        public XElement HeapResolve(object resolveObject)
+        {
+            if (resolveObject == null) 
+                return XMLUtility.CreateNullNode();
+            return HeapResolve(resolveObject, TypeManager.ConventionOf(resolveObject.GetType()));
+        }
+        public object HeapDeresolve(XElement serialized)
+        {
+            if (serialized == null || XMLUtility.IsNullOf(serialized))
+                return null;
+            return HeapDeresolve(serialized, ResolversManager.GetResolver(serialized.Name.LocalName));
         }
 
         /// <summary>
