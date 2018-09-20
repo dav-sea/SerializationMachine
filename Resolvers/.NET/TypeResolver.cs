@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     public class TypeResolver : Core.IResolver
     {
@@ -21,7 +21,7 @@ namespace SerializeMachine.Resolvers
             string convention;
             var value = resolveObject as Type;
 
-            if(Serializator.GetTypeManager().Dictionary.TryGetConvention(value,out convention))
+            if(Serializator.GetTypeManager().UsingDictionary.TryGetConvention(value,out convention))
                 serialized.Value = "@" + convention;
             else
                 serialized.Value = value.AssemblyQualifiedName;
@@ -31,7 +31,7 @@ namespace SerializeMachine.Resolvers
         protected internal override object ManagedObjectOf(XElement serializedObject)
         {
             if (serializedObject.Value[0] == '@')
-                return Serializator.GetTypeManager().Dictionary.TypeOf(serializedObject.Value.Remove(0, 1));
+                return Serializator.GetTypeManager().UsingDictionary.TypeOf(serializedObject.Value.Remove(0, 1));
             else
                 return Type.GetType(serializedObject.Value);
         }

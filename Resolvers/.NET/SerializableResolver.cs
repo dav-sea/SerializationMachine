@@ -4,9 +4,9 @@ using System.Xml.Linq;
 using System.Runtime.Serialization;
 using System.Reflection;
 
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     public sealed class SerializableResolver : Core.IResolver
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;//TODO CHECK System.Reflection.Cache
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
    public static class SerializationUtility
     {

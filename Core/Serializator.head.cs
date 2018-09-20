@@ -1,7 +1,7 @@
 ﻿using System;
-using SerializeMachine.Managers;
+using SerializationMachine.Managers;
 
-namespace SerializeMachine.Core
+namespace SerializationMachine.Core
 {
     public partial class Serializator
     {
@@ -53,8 +53,8 @@ namespace SerializeMachine.Core
             :this(new TypeManager(),new HeapManager())
         {
             TypeManager = new TypeManager();
-            ResolversManager = new ResolverBank(this);
             HeapManager = new HeapManager();
+            ResolversManager = new ResolverBank(this);
         }
 
         public Serializator(TypeManager typeManager,HeapManager heapManager)

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-using SerializeMachine.Utility;
-using SerializeMachine.Managers;
+using SerializationMachine.Utility;
+using SerializationMachine.Managers;
 
-namespace SerializeMachine.Core
+namespace SerializationMachine.Core
 {
     public  sealed partial class Serializator
     {

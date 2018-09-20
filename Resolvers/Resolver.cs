@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SerializeMachine.Core;
-using SerializeMachine.Utility;
+using SerializationMachine.Core;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     public abstract class Resolver : IResolver
     {

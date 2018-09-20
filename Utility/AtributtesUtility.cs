@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
     public static class AtributtesUtility
     {

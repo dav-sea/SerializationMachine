@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializeMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolvers.Primitives
 {
     /// <summary>
     /// Стандартный сериализатор типа Int16 (short)

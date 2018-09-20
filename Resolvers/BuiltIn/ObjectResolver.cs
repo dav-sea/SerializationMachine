@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     public sealed class ObjectResolver : Core.IResolver
     {

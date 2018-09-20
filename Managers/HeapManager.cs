@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 
 
-using SerializeMachine.Utility;
-using SerializeMachine.Core;
+using SerializationMachine.Utility;
+using SerializationMachine.Core;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public sealed class HeapManager
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
     internal sealed class UninitializedObjectFactory : IFactory
     {

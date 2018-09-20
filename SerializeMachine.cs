@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 using System.Xml.Linq;
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public sealed class SerializeMachine
     {
@@ -27,7 +27,7 @@ namespace SerializeMachine
             var package = new XElement("SMPackage");
 
             package.Add(new XAttribute("Root",Serializator.GetHeapManager().Managed.GuidOf(root).ToString()));
-            PackageUtility.PackToInternal(package, Serializator.GetTypeManager().Dictionary, Serializator.GetHeapManager().Serialized);
+            PackageUtility.PackToInternal(package, Serializator.GetTypeManager().UsingDictionary, Serializator.GetHeapManager().Serialized);
 
             return package;
         }
@@ -35,9 +35,7 @@ namespace SerializeMachine
         {
             Serializator.FlashHeaps();
 
-            //Serializator.GetTypeManager().Dictionary.Clear();
-            //Serializator.GetTypeManager().Dictionary.OverloadTypes(PackageUtility.GetTypeDictionaryInternal(package));
-            TypeDictionary.LoadTypes(Serializator.GetTypeManager().Dictionary, PackageUtility.GetTypeDictionaryInternal(package));
+            TypeDictionary.LoadTypes(Serializator.GetTypeManager().UsingDictionary, PackageUtility.GetTypeDictionaryInternal(package));
             PackageUtility.UnpackSerializedHeap(PackageUtility.GetSerializedHeapInternal(package), Serializator.GetHeapManager().Serialized);
 
             var rootGuid = new Guid(package.Attribute("Root").Value);
@@ -45,7 +43,6 @@ namespace SerializeMachine
         }
         public void ReserveConvention(Type type,string convention)
         {
-            //Serializator.GetTypeManager().InvalidTypeDictionary.OverloadConvention(type, convention);
             Serializator.GetTypeManager().ReserveConvention(type, convention);
         }
     }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
     public static class PackageUtility
     {

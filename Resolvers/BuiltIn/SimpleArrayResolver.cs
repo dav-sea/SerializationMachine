@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 using System.Xml.Linq;
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 using System.Reflection;
 
-namespace SerializeMachine.Resolvers.BuiltIn
+namespace SerializationMachine.Resolvers.BuiltIn
 {
     public sealed class SimpleArrayResolver : IResolver
     {

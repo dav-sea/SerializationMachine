@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializeMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolvers.Primitives
 {
     public sealed class UInt16Resolver : Core.IResolver
     {

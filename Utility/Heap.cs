@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
     public sealed class Heap<TValue> : IHeap<TValue>
     {

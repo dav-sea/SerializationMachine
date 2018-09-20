@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 using System.Reflection;
 using System.Runtime;
-using SerializeMachine.Resolvers;
-using SerializeMachine.Utility;
-using SerializeMachine.Resolvers.Primitives;
-using SerializeMachine.Resolvers.BuiltIn;
-using SerializeMachine.Utility.Factory.Generic;
+using SerializationMachine.Resolvers;
+using SerializationMachine.Utility;
+using SerializationMachine.Resolvers.Primitives;
+using SerializationMachine.Resolvers.BuiltIn;
+using SerializationMachine.Utility.Factory.Generic;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public sealed class ResolverFacrory
     {

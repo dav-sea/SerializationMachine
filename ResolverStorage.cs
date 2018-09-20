@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using SerializeMachine.Core;
-using SerializeMachine.Resolvers.Primitives;
-using SerializeMachine.Resolvers;
-using SerializeMachine.Utility;
+using SerializationMachine.Core;
+using SerializationMachine.Resolvers.Primitives;
+using SerializationMachine.Resolvers;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public sealed class ResolverStorage : IResolverStorage
     {

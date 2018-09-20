@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public sealed class TypeDictionary
     {
@@ -75,10 +75,10 @@ namespace SerializeMachine
             if (string.Empty.Equals(convention)) throw new ArgumentException();
 
             var index = TypeList.IndexOfKey(convention);
-            if (index < 0)
-                TypeList.Add(convention, type);
-            else
-                TypeList.Values[index] = type;
+            if (index >= 0)
+                TypeList.RemoveAt(index);
+
+            TypeList.Add(convention, type);
         }
         /// <summary>
         /// Устанавливает convention для указанного типа. Если указанный convention
@@ -89,10 +89,10 @@ namespace SerializeMachine
         public void SetConventionInternal(Type type, string convention)
         {
             var index = TypeList.IndexOfKey(convention);
-            if (index < 0)
-                TypeList.Add(convention, type);
-            else
-                TypeList.Values[index] = type;
+            if (index >= 0)
+                TypeList.RemoveAt(index);
+
+            TypeList.Add(convention, type);
         }
         /// <summary>
         /// Устанавливает Convention для указанного типа. Нет проверки входных параметров.

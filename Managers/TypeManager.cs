@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SerializeMachine.Managers
+namespace SerializationMachine.Managers
 {
-    public sealed class TypeManager : Core.ITypeManager
+    public sealed class TypeManager //: Core.ITypeManager
     {
-        public TypeDictionary Dictionary { private set; get; }
-        public TypeDictionary InvalidTypeDictionary { private set; get; }
+        public TypeDictionary UsingDictionary { private set; get; }
+        public TypeDictionary ReservedDictionary { private set; get; }
 
         public Type TypeOf(string convention)
         {
             Type type;
-            if (!Dictionary.TryGetType(convention, out type))
+            if (!UsingDictionary.TryGetType(convention, out type))
                 throw new ArgumentException("convention");
             return type;
         }
@@ -21,26 +21,26 @@ namespace SerializeMachine.Managers
         public string ConventionOf(Type type)
         {
             string convention;
-            if (!Dictionary.TryGetConvention(type, out convention))
+            if (!UsingDictionary.TryGetConvention(type, out convention))
             {
                 convention = GetNewValidConvention(type);
-                Dictionary.AddConventionInternal(type, convention);
+                UsingDictionary.AddConventionInternal(type, convention);
             }
             return convention;
         }
         private string GetNewValidConvention(Type type)
         {
             string convention;
-            if (!InvalidTypeDictionary.TryGetConvention(type, out convention))
+            if (!ReservedDictionary.TryGetConvention(type, out convention))
             {
-                convention = CreateConvention(Dictionary.Count);
+                convention = CreateConvention(UsingDictionary.Count);
             }
             return convention;
         }
         private string CreateConvention(int number)
         {
             var result = "_" + Convert.ToString(number, 16);
-            if (Dictionary.ContainsConvention(result))
+            if (UsingDictionary.ContainsConvention(result))
                 return CreateConvention(number + 1);
             return result;
         }
@@ -50,13 +50,13 @@ namespace SerializeMachine.Managers
             if (type == null) throw new ArgumentNullException();
             if (string.Empty.Equals(convention)) throw new ArgumentException();
 
-            InvalidTypeDictionary.SetConventionInternal(type, convention);
+            ReservedDictionary.SetConventionInternal(type, convention);
         }
 
         public TypeManager(TypeDictionary dictionary)
         {
-            this.Dictionary = dictionary;
-            InvalidTypeDictionary = new TypeDictionary(10);
+            this.UsingDictionary = dictionary;
+            ReservedDictionary = new TypeDictionary(10);
         }
         internal TypeManager()
             : this(new TypeDictionary(20))

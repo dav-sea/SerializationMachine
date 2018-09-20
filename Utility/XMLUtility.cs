@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-using SerializeMachine.Core;
-namespace SerializeMachine.Utility
+using SerializationMachine.Core;
+namespace SerializationMachine.Utility
 {
     public static class XMLUtility
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SerializeMachine.Utility
+namespace SerializationMachine.Utility
 {
     public interface IHeap<TValue> : ICollection<KeyValuePair<Guid,TValue>>
     {

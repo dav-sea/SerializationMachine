@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 
-using SerializeMachine.Utility;
+using SerializationMachine.Utility;
 
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     public sealed class SerializationInfoResolver : Resolver
     {

@@ -5,10 +5,10 @@ using System.Xml.Linq;
 
 using System.Runtime.Serialization;
 
-using SerializeMachine.Core;
-using SerializeMachine.Utility;
+using SerializationMachine.Core;
+using SerializationMachine.Utility;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolvers
 {
     /// <summary>
     /// Resolver 

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SerializeMachine.Core;
+using SerializationMachine.Core;
 
-namespace SerializeMachine
+namespace SerializationMachine
 {
     public class SerializationCapsule
     {
