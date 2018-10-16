@@ -8,47 +8,129 @@ using SerializationMachine.Utility;
 using SerializationMachine.Resolvers.Primitives;
 using SerializationMachine.Resolvers.BuiltIn;
 using SerializationMachine.Utility.Factory.Generic;
+using System.Runtime.Serialization;
 
 namespace SerializationMachine
 {
     public sealed class ResolverFacrory
     {
         private readonly Serializator Serializator;
-        private static readonly Type RuntimeType = TypeOf<Type>.Type.GetType();
+        private static readonly Type RuntimeType = TypeOf<Type>.Type.GetType();//TODO DEBUG MB REMOVE .GetType();
+        private static readonly Type Delegate = typeof(Delegate);
 
+        /// <summary>
+        /// Creates the resolver.
+        /// </summary>
+        /// <returns>The resolver.</returns>
+        /// <param name="convention">Convention.</param>
         public IResolver CreateResolver(string convention)
+        {
+            var type = Serializator.GetTypeManager().TypeOf(convention);
+            return CreateResolver(type);
+        }
+
+        public IResolver CreateResolver(Type type)
         {
             IResolver result;
 
-            var type = Serializator.GetTypeManager().TypeOf(convention);
+            if (TryCreateDefaultResolver(type, out result))
+                return result;
 
-            //Нужно отловить все втроенные типы
+            if (TypeOf<ISerializable>.Type.IsAssignableFrom(type))
+                return CreateISerialzableResolver(type);
+
+            return CreateRuntimeResolver(type);
+        }
+
+        /// <summary>
+        /// Tries the create default resolver.
+        /// </summary>
+        /// <returns><c>true</c>, if create default resolver was tryed, <c>false</c> otherwise.</returns>
+        /// <param name="type">Type.</param>
+        /// <param name="resolver">Resolver.</param>
+        private bool TryCreateDefaultResolver(Type type,out IResolver resolver)
+        {
             if (type.IsValueType)//Проверяем является ли тип значимым
             {
-                if (type.IsPrimitive )//Проверяем является ли тип примитивным
+                if (type.IsPrimitive && TryCreatePrimitiveResolver(type, out resolver))//Проверяем является ли тип примитивным
+                    return true;
+
+                if (TypeOf<Decimal>.Equals(type)) 
                 {
-                    if(TryCreatePrimitiveResolver(type,out result)) return result;
+                    resolver = new DecimalResolver();
+                    return true;
                 }
-                if (TypeOf<Decimal>.Equals(type)) return new DecimalResolver();
             }
             else
             {
                 if (type.IsArray)
-                    return CreateArrayResolver(type);
+                {
+                    resolver = CreateArrayResolver(type);
+                    return true;
+                }
 
-                if (TypeOf<Object>.Equals(type)) return new ObjectResolver();
-                if (TypeOf<String>.Equals(type)) return new StringResolver();
-                if (RuntimeType.Equals(type)) return new TypeResolver(Serializator);
+                if (TypeOf<Object>.Equals(type)) { resolver = new ObjectResolver(); return true; }
+                if (TypeOf<String>.Equals(type)) { resolver = new StringResolver(); return true; }
+                if (RuntimeType.Equals(type)) { resolver = new TypeResolver(Serializator); return true; }
+
+                if (Delegate.IsAssignableFrom(type))
+                {
+                    if ((Serializator.Options & SerializatorOption.ThrowOutExceptions) != 0)
+                        throw new NotSupportedException("Serialization delegates is not supported");
+                    resolver = new EmptyResolver(Serializator);
+                    return true;
+                }
+
             }
 
-            if (TypeOf<System.Runtime.Serialization.ISerializable>.Type.IsAssignableFrom(type))
-            {
-                return new SerializableResolver(type, Serializator);
-            }
-
-            return RuntimeResolver.ConfigurateRuntimeResolver(type, Serializator);
+            resolver = null;
+            return false;
         }
 
+        /// <summary>
+        /// Creates the IS erialzable resolver.
+        /// </summary>
+        /// <returns>The IS erialzable resolver.</returns>
+        /// <param name="type">Type.</param>
+        private IResolver CreateISerialzableResolver(Type type)
+        {
+            if((Serializator.Options & SerializatorOption.AllowISerialzable) != 0)
+                return new SerializableResolver(type, Serializator);
+            return ExceptionHandler("Not Allow ISerialzble");
+        }
+
+        /// <summary>
+        /// Creates the runtime resolver.
+        /// </summary>
+        /// <returns>The runtime resolver.</returns>
+        /// <param name="type">Type.</param>
+        private IResolver CreateRuntimeResolver(Type type)
+        {
+            if ((Serializator.Options & SerializatorOption.AllowRuntimeResolvers) != 0)
+                return RuntimeResolver.ConfigurateRuntimeResolver(type, Serializator);
+            return ExceptionHandler("Not Allow RuntimeResolvers");
+        }
+
+
+        /// <summary>
+        /// Обработчик исключительных ситуаций
+        /// </summary>
+        /// <returns>EmptyResolver</returns>
+        /// <param name="message">Exception message.</param>
+        private IResolver ExceptionHandler(string message)
+        {
+            if ((Serializator.Options & SerializatorOption.ThrowOutExceptions) != 0)
+                throw new NotSupportedException(message);
+            else
+                return new EmptyResolver(Serializator);
+        }
+
+        /// <summary>
+        /// Пытется найти подходящий resolver для указанного примитивного типа 
+        /// </summary>
+        /// <returns><c>true</c>, if create primitive resolver was tryed, <c>false</c> otherwise.</returns>
+        /// <param name="type">Type.</param>
+        /// <param name="resolver">Resolver.</param>
         private bool TryCreatePrimitiveResolver(Type type, out IResolver resolver)
         {
             if (TypeOf<Boolean>.Equals(type)) { resolver = new BooleanResolver(); return true; }
@@ -66,6 +148,18 @@ namespace SerializationMachine
             resolver = null;
             return false;
         }
+        /// <summary>
+        /// Создает наиболее подходящий resolver для сериализации заданного типа массива.
+        /// 
+        /// Исключения : NotSupportedException* - массив имеет размерность больше чем один
+        /// * Исключение возникает только с указанным SerializatorOption.ThrowOutExceptions
+        /// 
+        /// </summary>
+        /// <returns>
+        /// SimpleArrayResolver - если ранг массива равен единице
+        /// EmptyResolver - если ранг массива болше чем один (если не выбран SerializatorOption.ThrowOutExceptions)
+        /// </returns>
+        /// <param name="type">Тип массива</param>
         private IResolver CreateArrayResolver(Type type)
         {
             var rank = type.GetArrayRank();
@@ -73,7 +167,7 @@ namespace SerializationMachine
             {
                 return new SimpleArrayResolver(type, Serializator);
             }
-            else throw new InvalidOperationException();
+            return ExceptionHandler("Arrays with rank more 1 is not suppoted");//TODO
         }
         
 

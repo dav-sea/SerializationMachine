@@ -23,6 +23,8 @@ namespace SerializationMachine.Core
         /// </summary>
         internal static readonly string GUID_NULL_TOSTRING;
 
+        public readonly SerializatorOption Options;
+
         /// <summary>
         /// Менеджер куч
         /// </summary>
@@ -71,5 +73,17 @@ namespace SerializationMachine.Core
             GUID_NULL_TOSTRING = GUID_NULL.ToString();
         }
 
+    }
+
+    [Flags]
+    public enum SerializatorOption
+    {
+        ThrowOutExceptions = 1,
+        AllowRuntimeResolvers = 2,
+        AllowISerialzable = 4,
+        //AllowNonmarkedSerialization = 8, // TODO REALESATION
+
+        Slim = 0,
+        Default = AllowRuntimeResolvers | AllowISerialzable,
     }
 }

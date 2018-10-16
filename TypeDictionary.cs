@@ -12,6 +12,7 @@ namespace SerializationMachine
         public const string XML_ELEMENTNAME_TYPEDICTIONARY = "DICTIONARY";
 
         private readonly SortedList<string, Type> TypeList;
+        //private readonly SortedList<string, string> Modifications;
 
         public int Count
         {
