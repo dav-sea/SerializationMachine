@@ -26,8 +26,9 @@ namespace SerializationMachine
         public void SetResolver(IResolver resolver,string convention)
         {
             var index = ResolverList.IndexOfKey(convention);
-            if (index < 0) AddResolverInternal(resolver, convention);
-            else ResolverList.Values[index] = resolver;
+            if (index >= 0)
+                ResolverList.RemoveAt(index);
+            AddResolverInternal(resolver, convention);
         }
 
         public Core.IResolver GetResolver(string convention)

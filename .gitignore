@@ -4,3 +4,6 @@ SerializeMachine.csproj
 SerializeMachine.csproj.user
 obj
 .vs
+Testing/
+*.csproj
+*.sln
