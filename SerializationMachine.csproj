@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F51917D2-5F00-41B3-B000-7C5CECD0EA08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SerializeMachine</RootNamespace>
+    <AssemblyName>SerializeMachine</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\IResolver.cs" />
+    <Compile Include="Core\ITypeManager.cs" />
+    <Compile Include="Core\Serializator.cs" />
+    <Compile Include="Managers\HeapManager.cs" />
+    <Compile Include="IReadOnlyResolverStorage.cs" />
+    <Compile Include="IResolverStorage.cs" />
+    <Compile Include="Managers\TypeManager.cs" />
+    <Compile Include="ResolverBank.cs" />
+    <Compile Include="ResolverFacrory.cs" />
+    <Compile Include="ResolverStorage.cs" />
+    <Compile Include="Resolvers\BuiltIn\SimpleArrayResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\BooleanResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\ByteResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\CharResolver.cs" />
+    <Compile Include="Resolvers\Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\DecimalResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\DoubleResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\ObjectResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\SByteResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\SingleResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\Int16Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\Int64Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\Int32Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\StringResolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\UInt16Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\UInt32Resolver.cs" />
+    <Compile Include="Resolvers\BuiltIn\Primitives\UInt64Resolver.cs" />
+    <Compile Include="Resolvers\RuntimeResolver.cs" />
+    <Compile Include="Resolvers\.NET\SerializableResolver.cs" />
+    <Compile Include="Resolvers\.NET\SerializationInfoResolver.cs" />
+    <Compile Include="Resolvers\.NET\TypeResolver.cs" />
+    <Compile Include="SerializationCapsule.cs" />
+    <Compile Include="SerializeMachine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeDictionary.cs" />
+    <Compile Include="Utility\AtributtesUtility.cs" />
+    <Compile Include="Utility\Factory\FactoryUtility.cs" />
+    <Compile Include="Utility\Factory\FactoryByCustomFunc.cs" />
+    <Compile Include="Utility\Factory\NullFactory.cs" />
+    <Compile Include="Utility\Factory\FactoryByConstructor.cs" />
+    <Compile Include="Utility\Factory\IFactory.cs" />
+    <Compile Include="Utility\Factory\UninitializedObjectFactory.cs" />
+    <Compile Include="Utility\Heap.cs" />
+    <Compile Include="Utility\IHeap.cs" />
+    <Compile Include="Utility\PackageUtility.cs" />
+    <Compile Include="Utility\SerializationUtility.cs" />
+    <Compile Include="Utility\TypeOf.cs" />
+    <Compile Include="Utility\XMLUtility.cs" />
+    <Compile Include="Core\Serializator.head.cs" />
+    <Compile Include="Resolvers\EmptyResolver.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
