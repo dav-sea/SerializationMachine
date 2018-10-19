@@ -7,7 +7,6 @@ using SerializationMachine.Resolvers;
 using SerializationMachine.Utility;
 using SerializationMachine.Resolvers.Primitives;
 using SerializationMachine.Resolvers.BuiltIn;
-using SerializationMachine.Utility.Factory.Generic;
 using System.Runtime.Serialization;
 
 namespace SerializationMachine

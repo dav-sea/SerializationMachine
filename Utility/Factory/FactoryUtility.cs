@@ -28,9 +28,5 @@ namespace SerializationMachine.Utility
             if (instantiator == null) return new NullFactory();
             return new FactoryByCustomFunc(instantiator);
         }
-        public static IFactory ToIFactory<T>(this Factory.Generic.IFactory<T> genericFactory)
-        {
-            return CreateCustomFactory(()=>genericFactory.Instantiate());
-        }
     }
 }
