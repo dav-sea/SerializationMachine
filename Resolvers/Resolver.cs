@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using SerializationMachine.Core;
 using SerializationMachine.Utility;
 
@@ -8,33 +9,33 @@ namespace SerializationMachine.Resolvers
     public abstract class Resolver : IResolver
     {
         protected readonly Serializator Serializator;
-        private readonly IFactory InstanceFactory;
+        private readonly ITemplateInstanceFactory TemplateInstanceFactory;
 
-        public Resolver(IFactory instanceFactory, Type resolveType, Serializator serializator)
+        public Resolver(ITemplateInstanceFactory instanceFactory, Type resolveType, Serializator serializator)
             :base(resolveType)
         {
             this.Serializator = serializator;
-            this.InstanceFactory = instanceFactory;
+            this.TemplateInstanceFactory = instanceFactory;
         }
         public Resolver(Type resolveType,bool useConstructor, Serializator serializator)
             : base(resolveType)
         {
             this.Serializator = serializator;
             if (useConstructor)
-                InstanceFactory = FactoryUtility.CreateConstructorFactory(resolveType);
+                TemplateInstanceFactory = new ConstructorInstanceFactory(resolveType);
             else
-                InstanceFactory = FactoryUtility.CreateUninitializedFactory(resolveType);
+                TemplateInstanceFactory = new UninitializedInstanceFactory(resolveType);
         }
-        public Resolver(Type resolveType, Func<object> customFactory, Serializator serializator)
+        public Resolver(Type resolveType, Func<XElement,object> customFactory, Serializator serializator)
             : base(resolveType)
         {
             this.Serializator = serializator;
-            InstanceFactory = FactoryUtility.CreateCustomFactory(customFactory);
+            TemplateInstanceFactory = new FuncInstanceFactory(customFactory);
         }
 
-        protected internal override sealed object ManagedObjectOf(System.Xml.Linq.XElement serializedObject)
+        protected internal override sealed object GetTemplateInstance(XElement serializedObject)
         {
-            return InstanceFactory.Instantiate();
+            return TemplateInstanceFactory.Instantiate(serializedObject);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace SerializationMachine.Resolvers
         }
         public ObjectResolver() : base(Utility.TypeOf<object>.Type) { }
 
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return new object();
         }

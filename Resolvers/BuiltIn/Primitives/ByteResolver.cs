@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = System.Byte.Parse(serialized.Value);
         }
         public ByteResolver() : base(Utility.TypeOf<byte>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return (byte)0;
         }

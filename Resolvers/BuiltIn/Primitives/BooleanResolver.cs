@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = System.Boolean.Parse(serialized.Value);
         }
         public BooleanResolver() : base(Utility.TypeOf<bool>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return false;
         }

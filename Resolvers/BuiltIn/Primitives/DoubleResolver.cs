@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = System.Double.Parse(serialized.Value);
         }
         public DoubleResolver() : base(Utility.TypeOf<double>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return 0.0;
         }

@@ -54,6 +54,7 @@
     <Compile Include="Resolvers\BuiltIn\Primitives\BooleanResolver.cs" />
     <Compile Include="Resolvers\BuiltIn\Primitives\ByteResolver.cs" />
     <Compile Include="Resolvers\BuiltIn\Primitives\CharResolver.cs" />
+    <Compile Include="Resolvers\MultirankArrayResolver.cs" />
     <Compile Include="Resolvers\Resolver.cs" />
     <Compile Include="Resolvers\BuiltIn\DecimalResolver.cs" />
     <Compile Include="Resolvers\BuiltIn\Primitives\DoubleResolver.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Utility\IHeap.cs" />
     <Compile Include="Utility\PackageUtility.cs" />
     <Compile Include="Utility\SerializationUtility.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\TemplateInstanceFactory.cs" />
     <Compile Include="Utility\TypeOf.cs" />
     <Compile Include="Utility\XMLUtility.cs" />
     <Compile Include="Core\Serializator.head.cs" />

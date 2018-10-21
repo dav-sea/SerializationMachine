@@ -31,7 +31,7 @@ namespace SerializationMachine.Core
         /// <param name="resolveType"></param>
         internal IResolver(Type resolveType)
         {
-            this.ResolveType = resolveType;
+            ResolveType = resolveType;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace SerializationMachine.Core
         /// </summary>
         /// <param name="serializedObject">Сериализированная версия объекта</param>
         /// <returns>Новывй экземпляр типа ResolveType</returns>
-        internal protected abstract object ManagedObjectOf(XElement serializedObject);
+        internal protected abstract object GetTemplateInstance(XElement serializedObject);
 
         public override bool Equals(object obj)
         {
@@ -58,7 +58,7 @@ namespace SerializationMachine.Core
         }
         public override int GetHashCode()
         {
-            return ResolveType.GetHashCode() * 7;
+            return ResolveType.GetHashCode() >> 2;
         }
         public override string ToString()
         {

@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers
             instance = System.Decimal.Parse(serialized.Value);
         }
         public DecimalResolver() : base(Utility.TypeOf<decimal>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return 0.0M;
         }

@@ -49,7 +49,7 @@ namespace SerializationMachine.Resolvers.BuiltIn
         }
 
 
-        protected internal override sealed object ManagedObjectOf(XElement serializedObject)
+        protected internal override sealed object GetTemplateInstance(XElement serializedObject)
         {
             var sizeAttribute = serializedObject.Attribute("SIZE");
             var leng = int.Parse(sizeAttribute.Value);

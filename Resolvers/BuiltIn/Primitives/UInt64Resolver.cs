@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = System.UInt64.Parse(serialized.Value);
         }
         public UInt64Resolver() : base(Utility.TypeOf<ulong>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return (ulong)0;
         }

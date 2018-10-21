@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = serialized.Value;
         }
         public StringResolver() : base(Utility.TypeOf<string>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return string.Empty;
         }

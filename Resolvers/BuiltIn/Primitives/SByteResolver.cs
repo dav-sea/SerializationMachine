@@ -15,7 +15,7 @@ namespace SerializationMachine.Resolvers.Primitives
         public SByteResolver() : base(Utility.TypeOf<sbyte>.Type) { }
 
 
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return (sbyte)0;
         }
