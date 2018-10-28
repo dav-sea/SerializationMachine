@@ -56,7 +56,7 @@ namespace SerializationMachine.Resolvers
             
         }
 
-        private static object SerializationInfoFactory()
+        private static object SerializationInfoFactory(XElement serialized)
         {
             return new SerializationInfo(TypeOf<Object>.Type, new FormatterConverter());
         }

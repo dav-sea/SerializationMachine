@@ -8,6 +8,7 @@ using SerializationMachine.Utility;
 using SerializationMachine.Resolvers.Primitives;
 using SerializationMachine.Resolvers.BuiltIn;
 using System.Runtime.Serialization;
+using SerializeMachine.Resolvers;
 
 namespace SerializationMachine
 {
@@ -161,12 +162,13 @@ namespace SerializationMachine
         /// <param name="type">Тип массива</param>
         private IResolver CreateArrayResolver(Type type)
         {
-            var rank = type.GetArrayRank();
-            if (rank == 1)
-            {
-                return new SimpleArrayResolver(type, Serializator);
-            }
-            return ExceptionHandler("Arrays with rank more 1 is not suppoted");//TODO
+            //var rank = type.GetArrayRank();
+            //if (rank == 1)
+            //{
+            //    return new SimpleArrayResolver(type, Serializator);
+            //}
+            //return ExceptionHandler("Arrays with rank more 1 is not suppoted");//TODO
+            return new MultirankArrayResolver(type,Serializator);
         }
         
 

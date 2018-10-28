@@ -51,7 +51,7 @@ namespace SerializationMachine.Resolvers
             }
         }
 
-        private RuntimeResolver(Type resolveType, Serializator serializator,IFactory factory)
+        private RuntimeResolver(Type resolveType, Serializator serializator,ITemplateInstanceFactory factory)
             :base(factory,resolveType,serializator)
         {
             if (resolveType != null)
@@ -66,9 +66,9 @@ namespace SerializationMachine.Resolvers
 
         public static RuntimeResolver ConfigurateRuntimeResolver(Type resolveType, Serializator serializator)
         {
-            var defaultConstructor = SerializationUtility.Reflection.GetDefaultConstructor(resolveType);
+            var defaultConstructor = SerializationUtility.Reflection.GetDefaultConstructor(resolveType);//TODO
             if (defaultConstructor != null)
-                return new RuntimeResolver(resolveType, serializator, FactoryUtility.CreateConstructorFactory(defaultConstructor));
+                return new RuntimeResolver(resolveType, serializator, new ConstructorInstanceFactory(resolveType));
 
             return new RuntimeResolver(serializator, resolveType, false);
         }
