@@ -15,6 +15,6 @@ namespace SerializationMachine.Utility
     }
     public interface IFactoryArg<TArg>
     {
-        object Instatiate(TArg arg);
+        object Instantiate(TArg arg);
     }
 }

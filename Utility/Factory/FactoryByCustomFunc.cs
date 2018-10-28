@@ -5,6 +5,7 @@ using System.Text;
 
 namespace SerializationMachine.Utility
 {
+    [Obsolete("Use TemplateInstanceFactory")]
     internal sealed class FactoryByCustomFunc : IFactory
     {
         private readonly Func<object> CustomFunc;

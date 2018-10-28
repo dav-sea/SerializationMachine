@@ -33,7 +33,7 @@ namespace SerializationMachine.Resolvers
             Constructor.Invoke(instance, new object[] { serializationInfo, new StreamingContext() });
         }
 
-        protected internal override object ManagedObjectOf(System.Xml.Linq.XElement serializedObject)
+        protected internal override object GetTemplateInstance(System.Xml.Linq.XElement serializedObject)
         {
             return InstanceFactory.Instantiate();   
         }

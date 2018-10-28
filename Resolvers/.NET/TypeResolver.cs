@@ -28,7 +28,7 @@ namespace SerializationMachine.Resolvers
 
         }
 
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             if (serializedObject.Value[0] == '@')
                 return Serializator.GetTypeManager().UsingDictionary.TypeOf(serializedObject.Value.Remove(0, 1));

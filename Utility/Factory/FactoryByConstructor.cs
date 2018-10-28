@@ -3,6 +3,7 @@ using System.Reflection;
 
 namespace SerializationMachine.Utility
 {
+    [Obsolete("Use TemplateInstanceFactory")]
     internal sealed class FactoryByConstructor : IFactory
     {
         private readonly ConstructorInfo Constructor;

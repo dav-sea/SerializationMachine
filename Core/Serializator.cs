@@ -97,7 +97,7 @@ namespace SerializationMachine.Core
             }
             else
             {
-                object instance = resolver.ManagedObjectOf(serializedObject);
+                object instance = resolver.GetTemplateInstance(serializedObject);
                 DeresolveInternal(serializedObject, ref instance, resolver);
                 return instance;
             }
@@ -127,7 +127,7 @@ namespace SerializationMachine.Core
             if (XMLUtility.GUIDAttributeConatins(serialized))
             {
                 finalGuid = new Guid(XMLUtility.GuidOfAttributeInternal(serialized));
-                instance = resolver.ManagedObjectOf(serialized);
+                instance = resolver.GetTemplateInstance(serialized);
                 if (instance != null)
                     HeapManager.Managed.Add(finalGuid, instance);
                 DeresolveInternal(serialized, ref instance, resolver);

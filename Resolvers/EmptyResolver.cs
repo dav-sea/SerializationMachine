@@ -8,7 +8,7 @@ namespace SerializationMachine.Resolvers
     public class EmptyResolver : Resolver
     {
         public EmptyResolver(Serializator serializator) 
-            : base(new Utility.NullFactory(), TypeOf<object>.Type, serializator)
+            : base(new NullTemplateFactory(), TypeOf<object>.Type, serializator)
         {
         }
 

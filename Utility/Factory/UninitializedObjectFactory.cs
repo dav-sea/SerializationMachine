@@ -2,6 +2,7 @@
 
 namespace SerializationMachine.Utility
 {
+    [Obsolete("Use TemplateInstanceFactory")]
     internal sealed class UninitializedObjectFactory : IFactory
     {
         private readonly Type TypeObject;

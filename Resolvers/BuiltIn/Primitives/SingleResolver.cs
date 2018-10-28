@@ -13,7 +13,7 @@ namespace SerializationMachine.Resolvers.Primitives
             instance = System.Single.Parse(serialized.Value);
         }
         public SingleResolver() : base(Utility.TypeOf<float>.Type) { }
-        protected internal override object ManagedObjectOf(XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return 0.0f;
         }
