@@ -1,7 +1,5 @@
-bin/Debug
-SerializeMachine.pdb
-SerializeMachine.csproj
-SerializeMachine.csproj.user
-obj
+bin/
+obj/
 .vs
 Testing/
+ArraySerializationExaple

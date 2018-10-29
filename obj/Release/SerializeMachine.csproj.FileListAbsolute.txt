@@ -1,4 +1,0 @@
-C:\Users\FmThePro\documents\visual studio 2010\Projects\SerializeMachine\SerializeMachine\bin\Release\SerializeMachine.dll
-C:\Users\FmThePro\documents\visual studio 2010\Projects\SerializeMachine\SerializeMachine\bin\Release\SerializeMachine.pdb
-C:\Users\FmThePro\documents\visual studio 2010\Projects\SerializeMachine\SerializeMachine\obj\Release\SerializeMachine.dll
-C:\Users\FmThePro\documents\visual studio 2010\Projects\SerializeMachine\SerializeMachine\obj\Release\SerializeMachine.pdb
