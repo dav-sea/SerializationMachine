@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
-using SerializationMachine.Core;
-using SerializationMachine.Utility;
 
-namespace SerializeMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
     public sealed class MultirankArrayResolver : IResolver
     {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 
-using SerializationMachine.Core;
 namespace SerializationMachine.Utility
 {
     public static class XMLUtility

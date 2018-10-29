@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 
-using SerializationMachine.Utility;
 
-
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
     public sealed class SerializationInfoResolver : Resolver
     {
@@ -50,7 +47,7 @@ namespace SerializationMachine.Resolvers
             }
         }
 
-        public SerializationInfoResolver(Core.Serializator serializator)
+        public SerializationInfoResolver(Serializator serializator)
             : base(typeof(SerializationInfo), SerializationInfoFactory, serializator)
         {
             

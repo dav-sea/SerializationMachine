@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-
-using SerializationMachine.Core;
+﻿using System.Xml.Linq;
 
 namespace SerializationMachine.Utility
 {

@@ -8,8 +8,8 @@
     <ProjectGuid>{F51917D2-5F00-41B3-B000-7C5CECD0EA08}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SerializeMachine</RootNamespace>
-    <AssemblyName>SerializeMachine</AssemblyName>
+    <RootNamespace>SerializationMachine</RootNamespace>
+    <AssemblyName>SerializationMachine</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,63 +36,60 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\IResolver.cs" />
-    <Compile Include="Core\ITypeManager.cs" />
-    <Compile Include="Core\Serializator.cs" />
-    <Compile Include="Managers\HeapManager.cs" />
-    <Compile Include="IReadOnlyResolverStorage.cs" />
-    <Compile Include="IResolverStorage.cs" />
-    <Compile Include="Managers\TypeManager.cs" />
-    <Compile Include="ResolverBank.cs" />
-    <Compile Include="ResolverFacrory.cs" />
-    <Compile Include="ResolverStorage.cs" />
-    <Compile Include="Resolvers\BuiltIn\SimpleArrayResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\BooleanResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\ByteResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\CharResolver.cs" />
-    <Compile Include="Resolvers\MultirankArrayResolver.cs" />
-    <Compile Include="Resolvers\Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\DecimalResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\DoubleResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\ObjectResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\SByteResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\SingleResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\Int16Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\Int64Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\Int32Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\StringResolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\UInt16Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\UInt32Resolver.cs" />
-    <Compile Include="Resolvers\BuiltIn\Primitives\UInt64Resolver.cs" />
-    <Compile Include="Resolvers\RuntimeResolver.cs" />
-    <Compile Include="Resolvers\.NET\SerializableResolver.cs" />
-    <Compile Include="Resolvers\.NET\SerializationInfoResolver.cs" />
-    <Compile Include="Resolvers\.NET\TypeResolver.cs" />
+    <Compile Include="Resolver\IResolver.cs" />
+    <Compile Include="Serializator\Serializator.cs" />
+    <Compile Include="Common\HeapManager.cs" />
+    <Compile Include="Resolver\IReadOnlyResolverStorage.cs" />
+    <Compile Include="Resolver\IResolverStorage.cs" />
+    <Compile Include="Common\TypeManager.cs" />
+    <Compile Include="Resolver\ResolverBank.cs" />
+    <Compile Include="Resolver\ResolverFacrory.cs" />
+    <Compile Include="Resolver\ResolverStorage.cs" />
+    <Compile Include="Resolver\Resolvers\Default\BooleanResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\ByteResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\CharResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\MultirankArrayResolver.cs" />
+    <Compile Include="Resolver\Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\DecimalResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\DoubleResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\ObjectResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\SByteResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\SingleResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\Int16Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\Int64Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\Int32Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\StringResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\UInt16Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\UInt32Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\Default\UInt64Resolver.cs" />
+    <Compile Include="Resolver\Resolvers\RuntimeResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Extend\SerializableResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Extend\SerializationInfoResolver.cs" />
+    <Compile Include="Resolver\Resolvers\Extend\TypeResolver.cs" />
     <Compile Include="SerializationCapsule.cs" />
     <Compile Include="SerializeMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeDictionary.cs" />
+    <Compile Include="Common\TypeDictionary.cs" />
     <Compile Include="Utility\AtributtesUtility.cs" />
-    <Compile Include="Utility\Factory\FactoryUtility.cs" />
-    <Compile Include="Utility\Factory\FactoryByCustomFunc.cs" />
-    <Compile Include="Utility\Factory\NullFactory.cs" />
-    <Compile Include="Utility\Factory\FactoryByConstructor.cs" />
-    <Compile Include="Utility\Factory\IFactory.cs" />
-    <Compile Include="Utility\Factory\UninitializedObjectFactory.cs" />
-    <Compile Include="Utility\Heap.cs" />
-    <Compile Include="Utility\IHeap.cs" />
+    <Compile Include="Common\Heap.cs" />
+    <Compile Include="Common\IHeap.cs" />
     <Compile Include="Utility\PackageUtility.cs" />
     <Compile Include="Utility\SerializationUtility.cs" />
-    <Compile Include="Utility\TemplateInstanceFactory\TemplateInstanceFactory.cs" />
-    <Compile Include="Utility\TypeOf.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\ITemplateInstanceFactory.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\DefaultTemplateFactory.cs" />
+    <Compile Include="Common\TypeOf.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\ConstructorInstanceFactory.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\FuncInstanceFactory.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\ActivatorInstanceFactory.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\NullTemplateFactory.cs" />
+    <Compile Include="Utility\TemplateInstanceFactory\UninitializedInstanceFactory.cs" />
     <Compile Include="Utility\XMLUtility.cs" />
-    <Compile Include="Core\Serializator.head.cs" />
-    <Compile Include="Resolvers\EmptyResolver.cs" />
+    <Compile Include="Serializator\Serializator.head.cs" />
+    <Compile Include="Resolver\Resolvers\EmptyResolver.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

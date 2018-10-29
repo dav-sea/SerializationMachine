@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializationMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public sealed class UInt64Resolver : Core.IResolver
+    public sealed class UInt64Resolver : IResolver
     {
         public override void Serialize(XElement serialized, object obj)
         {
@@ -12,7 +12,7 @@ namespace SerializationMachine.Resolvers.Primitives
         {
             instance = System.UInt64.Parse(serialized.Value);
         }
-        public UInt64Resolver() : base(Utility.TypeOf<ulong>.Type) { }
+        public UInt64Resolver() : base(TypeOf<ulong>.Type) { }
         protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return (ulong)0;

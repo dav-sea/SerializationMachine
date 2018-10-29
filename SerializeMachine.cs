@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using SerializationMachine.Core;
 using System.Xml.Linq;
 using SerializationMachine.Utility;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SerializationMachine.Managers
+namespace SerializationMachine
 {
     public sealed class TypeManager //: Core.ITypeManager
     {

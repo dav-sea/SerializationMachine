@@ -1,9 +1,7 @@
-﻿using System;
-using System.Xml.Linq;
-using SerializationMachine.Core;
+﻿using System.Xml.Linq;
 using SerializationMachine.Utility;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
     public class EmptyResolver : Resolver
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace SerializationMachine.Core
+namespace SerializationMachine.Resolver
 {
     /// <summary>
     /// Базовывй класс для всех Resolver`ов

@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializationMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public sealed class SByteResolver : Core.IResolver
+    public sealed class SByteResolver : IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -12,7 +12,7 @@ namespace SerializationMachine.Resolvers.Primitives
         {
             instance = System.SByte.Parse(serialized.Value);
         }
-        public SByteResolver() : base(Utility.TypeOf<sbyte>.Type) { }
+        public SByteResolver() : base(TypeOf<sbyte>.Type) { }
 
 
         protected internal override object GetTemplateInstance(XElement serializedObject)

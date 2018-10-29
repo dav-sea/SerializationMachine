@@ -1,7 +1,7 @@
 ﻿using System;
-using SerializationMachine.Managers;
+using SerializationMachine.Resolver;
 
-namespace SerializationMachine.Core
+namespace SerializationMachine
 {
     public partial class Serializator
     {

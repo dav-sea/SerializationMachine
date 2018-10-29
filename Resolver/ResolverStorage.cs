@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SerializationMachine.Core;
-using SerializationMachine.Resolvers.Primitives;
-using SerializationMachine.Resolvers;
-using SerializationMachine.Utility;
 
-namespace SerializationMachine
+namespace SerializationMachine.Resolver
 {
     public sealed class ResolverStorage : IResolverStorage
     {
@@ -31,7 +27,7 @@ namespace SerializationMachine
             AddResolverInternal(resolver, convention);
         }
 
-        public Core.IResolver GetResolver(string convention)
+        public IResolver GetResolver(string convention)
         {
             IResolver result;
             ResolverList.TryGetValue(convention, out result);

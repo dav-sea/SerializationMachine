@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
-
+using SerializationMachine.Resolver;
 using SerializationMachine.Utility;
-using SerializationMachine.Managers;
 
-namespace SerializationMachine.Core
+namespace SerializationMachine
 {
-    public  sealed partial class Serializator
+    public sealed partial class Serializator
     {
         /// <summary>
         /// Отчищает все кучи. 

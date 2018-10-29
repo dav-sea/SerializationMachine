@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public sealed class ObjectResolver : Core.IResolver
+    public sealed class ObjectResolver : IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -12,7 +12,7 @@ namespace SerializationMachine.Resolvers
         {
             
         }
-        public ObjectResolver() : base(Utility.TypeOf<object>.Type) { }
+        public ObjectResolver() : base(TypeOf<object>.Type) { }
 
         protected internal override object GetTemplateInstance(XElement serializedObject)
         {

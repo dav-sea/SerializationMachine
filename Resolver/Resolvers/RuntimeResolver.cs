@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Linq;
-
-using System.Runtime.Serialization;
-
-using SerializationMachine.Core;
 using SerializationMachine.Utility;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
     /// <summary>
     /// Resolver 

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
-using SerializationMachine.Core;
 using SerializationMachine.Utility;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver
 {
     public abstract class Resolver : IResolver
     {

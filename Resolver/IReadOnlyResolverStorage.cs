@@ -1,6 +1,4 @@
-﻿using SerializationMachine.Core;
-
-namespace SerializationMachine
+﻿namespace SerializationMachine.Resolver
 {
     public interface IReadOnlyResolverStorage
     {

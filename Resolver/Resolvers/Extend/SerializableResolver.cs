@@ -6,18 +6,19 @@ using System.Reflection;
 
 using SerializationMachine.Utility;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public sealed class SerializableResolver : Core.IResolver
+    public sealed class SerializableResolver : IResolver
     {
-        private readonly Core.Serializator Serializator;
+        private const string XML_ATTRIBUTE_NAME = "NAME";
+        private readonly Serializator Serializator;
         private readonly ConstructorInfo Constructor;
         private static readonly Type[] ConstructorSignature = new Type[]{typeof(SerializationInfo),typeof(StreamingContext)};
-        private readonly IFactory InstanceFactory;
+        private readonly ITemplateInstanceFactory InstanceFactory;
 
-        public override void Serialize(XElement serialized, object resolveObject)
+        public override void Serialize(XElement serialized, object instance)
         {
-            var serializableObject = resolveObject as ISerializable;
+            var serializableObject = instance as ISerializable;
 
             var serializationInfo = new SerializationInfo(ResolveType, new FormatterConverter());
             serializableObject.GetObjectData(serializationInfo, new StreamingContext());
@@ -25,33 +26,38 @@ namespace SerializationMachine.Resolvers
             Serializator.ResolveTo(serializationInfo, serialized);
         }
 
-        public override void Deserialzie(XElement serializedObject, ref object instance)
+        public override void Deserialzie(XElement serialized, ref object instance)
         {
             var serializationInfo = new SerializationInfo(ResolveType, new FormatterConverter());
-            Serializator.DeresolveTo(serializationInfo, serializedObject);
+            Serializator.DeresolveTo(serializationInfo, serialized);
 
             Constructor.Invoke(instance, new object[] { serializationInfo, new StreamingContext() });
         }
 
-        protected internal override object GetTemplateInstance(System.Xml.Linq.XElement serializedObject)
+        protected internal override object GetTemplateInstance(XElement serialized)
         {
-            return InstanceFactory.Instantiate();   
+            return InstanceFactory.Instantiate(serialized);   
         }
 
         private XElement SerializeEntry(SerializationEntry entry)
         {
             var serialized = Serializator.AutoResolve(entry.Value);
-            serialized.SetAttributeValue("NAME", entry.Name);
+            serialized.SetAttributeValue(XML_ATTRIBUTE_NAME, entry.Name);
             return serialized;
         }
 
-        public SerializableResolver(Type resolveType,Core.Serializator serializator)
+        public SerializableResolver(Serializator serializator, Type resolveType)
             : base(resolveType)
         {
-            this.Serializator = serializator;
-            InstanceFactory = FactoryUtility.CreateUninitializedFactory(resolveType);
+            if (serializator == null) throw new ArgumentNullException($"{nameof(SerializableResolver)}. Initializing was failed: serializator cant be null");
+            if (resolveType == null) throw new ArgumentNullException($"{nameof(SerializableResolver)}. Initializing was failed: resolveType cant be null");
+
+            Serializator = serializator;
+            InstanceFactory = new UninitializedInstanceFactory(resolveType);
+
             Constructor = resolveType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, ConstructorSignature, null);
-            
+            if (Constructor == null) throw new NotImplementedException($"{nameof(SerializableResolver)}. Initializing was failed: resolveType not implemented constructor with <SerializationInfo>, <StreamingContext> parameters");
+
             var resolverStorage = Serializator.GetResolverManager().Storage;
             var serializationInfoConvention = Serializator.GetTypeManager().ConventionOf(typeof(SerializationInfo));
             resolverStorage.SetResolver(new SerializationInfoResolver(serializator), serializationInfoConvention);

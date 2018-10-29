@@ -1,11 +1,11 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializationMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolver.Resolvers
 {
     /// <summary>
     /// Стандартный сериализатор типа Int16 (short)
     /// </summary>
-    public sealed class Int16Resolver : Core.IResolver
+    public sealed class Int16Resolver : IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -15,7 +15,7 @@ namespace SerializationMachine.Resolvers.Primitives
         {
             instance = System.Int16.Parse(serialized.Value);
         }
-        public Int16Resolver() : base(Utility.TypeOf<short>.Type) { }
+        public Int16Resolver() : base(TypeOf<short>.Type) { }
         protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return (short)0;

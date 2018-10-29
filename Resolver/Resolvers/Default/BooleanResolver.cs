@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 
-namespace SerializationMachine.Resolvers.Primitives
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public sealed class BooleanResolver : Core.IResolver
+    public sealed class BooleanResolver : IResolver
     {
         public override void Serialize(XElement serialized, object resolveObject)
         {
@@ -12,7 +12,7 @@ namespace SerializationMachine.Resolvers.Primitives
         {
             instance = System.Boolean.Parse(serialized.Value);
         }
-        public BooleanResolver() : base(Utility.TypeOf<bool>.Type) { }
+        public BooleanResolver() : base(TypeOf<bool>.Type) { }
         protected internal override object GetTemplateInstance(XElement serializedObject)
         {
             return false;

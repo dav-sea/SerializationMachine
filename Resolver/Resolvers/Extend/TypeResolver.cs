@@ -2,13 +2,13 @@
 using System.Xml.Linq;
 using SerializationMachine.Utility;
 
-namespace SerializationMachine.Resolvers
+namespace SerializationMachine.Resolver.Resolvers
 {
-    public class TypeResolver : Core.IResolver
+    public class TypeResolver : IResolver
     {
-        private readonly Core.Serializator Serializator;
+        private readonly Serializator Serializator;
 
-        public TypeResolver(Core.Serializator serializator)
+        public TypeResolver(Serializator serializator)
             :base(TypeOf<Type>.Type)
         {
             this.Serializator = serializator; 

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using SerializationMachine.Core;
-using System.Reflection;
-using System.Runtime;
-using SerializationMachine.Resolvers;
-using SerializationMachine.Utility;
-using SerializationMachine.Resolvers.Primitives;
-using SerializationMachine.Resolvers.BuiltIn;
 using System.Runtime.Serialization;
-using SerializeMachine.Resolvers;
+using SerializationMachine.Resolver.Resolvers;
 
-namespace SerializationMachine
+namespace SerializationMachine.Resolver
 {
     public sealed class ResolverFacrory
     {
@@ -95,7 +87,7 @@ namespace SerializationMachine
         private IResolver CreateISerialzableResolver(Type type)
         {
             if((Serializator.Options & SerializatorOption.AllowISerialzable) != 0)
-                return new SerializableResolver(type, Serializator);
+                return new SerializableResolver(Serializator,type);
             return ExceptionHandler("Not Allow ISerialzble");
         }
 
