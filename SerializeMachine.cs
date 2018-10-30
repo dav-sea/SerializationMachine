@@ -20,7 +20,6 @@ namespace SerializationMachine
         {
             Serializator.FlashHeaps();
 
-            //Serializator.AutoResolve(root);
             Serializator.HeapResolve(root);
             
             var package = new XElement("SMPackage");

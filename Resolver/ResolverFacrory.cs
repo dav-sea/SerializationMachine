@@ -67,10 +67,7 @@ namespace SerializationMachine.Resolver
 
                 if (Delegate.IsAssignableFrom(type))
                 {
-                    if ((Serializator.Options & SerializatorOption.ThrowOutExceptions) != 0)
-                        throw new NotSupportedException("Serialization delegates is not supported");
-                    resolver = new EmptyResolver(Serializator);
-                    return true;
+                    throw new NotSupportedException("Serialization delegates is not supported");
                 }
 
             }
@@ -86,9 +83,9 @@ namespace SerializationMachine.Resolver
         /// <param name="type">Type.</param>
         private IResolver CreateISerialzableResolver(Type type)
         {
-            if((Serializator.Options & SerializatorOption.AllowISerialzable) != 0)
+            //if((Serializator.Options & SerializatorOption.AllowISerialzable) != 0)
                 return new SerializableResolver(Serializator,type);
-            return ExceptionHandler("Not Allow ISerialzble");
+            //return ExceptionHandler("Not Allow ISerialzble");
         }
 
         /// <summary>
@@ -98,9 +95,9 @@ namespace SerializationMachine.Resolver
         /// <param name="type">Type.</param>
         private IResolver CreateRuntimeResolver(Type type)
         {
-            if ((Serializator.Options & SerializatorOption.AllowRuntimeResolvers) != 0)
+            //if ((Serializator.Options & SerializatorOption.AllowRuntimeResolvers) != 0)
                 return RuntimeResolver.ConfigurateRuntimeResolver(type, Serializator);
-            return ExceptionHandler("Not Allow RuntimeResolvers");
+            //ßreturn ExceptionHandler("Not Allow RuntimeResolvers");
         }
 
 
@@ -109,13 +106,13 @@ namespace SerializationMachine.Resolver
         /// </summary>
         /// <returns>EmptyResolver</returns>
         /// <param name="message">Exception message.</param>
-        private IResolver ExceptionHandler(string message)
-        {
-            if ((Serializator.Options & SerializatorOption.ThrowOutExceptions) != 0)
-                throw new NotSupportedException(message);
-            else
-                return new EmptyResolver(Serializator);
-        }
+        //private IResolver ExceptionHandler(string message)
+        //{
+        //    if ((Serializator.Options & SerializatorOption.ThrowOutExceptions) != 0)
+        //        throw new NotSupportedException(message);
+        //    else
+        //        return new EmptyResolver(Serializator);
+        //}
 
         /// <summary>
         /// Пытется найти подходящий resolver для указанного примитивного типа 
